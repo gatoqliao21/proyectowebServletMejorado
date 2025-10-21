@@ -1,0 +1,269 @@
+@charset "UTF-8";
+/* Estilos generales para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+justify-content: flex-start;
+
+}
+
+#Contenedor{
+	
+	height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+ #contenedorDatos {
+  background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    width: 100%;    
+    
+    top: 5%;
+    }
+
+
+
+
+#cerrar-formulario {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  transition: all 1s ease;
+}
+
+.#cerrar-formulario:hover {
+  transform: translateY(4px);
+  transition: 1s ;
+  box-shadow: 0 1px 5px rgba(41, 128, 185, 0.6);
+}
+
+
+
+
+
+
+
+
+
+/* Contenedor principal del formulario */
+#contenedorGeneral {
+	display:none;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Estilo del título */
+#titulo {
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* Contenedor del formulario */
+.contenedorFormulario {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor para cada par de etiqueta-input */
+.labelcontainer {
+    margin-bottom: 15px;
+}
+
+/* Estilos para las etiquetas (labels) */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Estilos para los campos de entrada de texto, fecha y select */
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+/* Estilo para el botón de guardar */
+#btnProcesarGestion {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+/* Efecto al pasar el mouse sobre el botón */
+#btnProcesarGestion:hover {
+    background-color: #0056b3;
+}
+
+/* Contenedor del botón, aunque el ID del HTML tiene un error de sintaxis */
+#contenedor-boton {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+
+
+#etiqueta-respuesta {
+    position: absolute;
+    top: 90%;
+    right: 100px; 
+    transform: translateY(-50%);
+    z-index: 1000;
+    transition: right 0.5s ease-in-out;
+    width: 300px;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    display: none; 
+}
+
+.mover-etiqueta {
+    right: 20px; 
+}
+
+
+#miBoton{
+	 width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+	
+}
+
+
+#ContenedorDatosUsuario{
+	    width: 100%;
+    height: 300px;
+	    display: flex;
+    flex-wrap: nowrap;
+}
+#datos{
+	
+	    width: 100%;
+	margin:20px;
+	
+	      background-color: #f0f2f5;
+	  
+
+}
+#tablaCitasReg{
+	width: 100%;
+	margin:20px;
+	
+	
+	
+	
+}
+
+#cabeceraInformativa{
+	display: flex;
+	margin:10px;
+	gap: 20%;  /*genera un espacio entre los divs */
+	
+}
+
+
+
+#perfil-txt{
+	
+	display: flex;
+	width: 100%;
+	
+}
+
+#datosDinamicos{
+	
+	width: 100%;
+	
+	height: 100%;
+}
+
+/* Estilos básicos de la tabla */
+#miTablaDatos {
+    border-collapse: collapse;
+    width: 100%;
+    	height: 90%;
+    background-color: #f2f2f2;
+}
+
+/* Aplica el espaciado (padding) solo a las celdas de la tabla con el ID "miTablaPersonalizada" */
+
+#miTablaDatos td {
+	
+	
+    text-align: center;
+    padding: 0px; /* Aquí se crea el espacio de 20px */
+}
+
+
+
+#mi_tabla_citas  tbody{
+	
+	    width: 100%;
+    /* background: red; */
+    height: 100%;
+    
+     overflow-y:auto;
+	
+}
+
+
+#contenedor_tablas_citas{
+    overflow-y: auto;	
+	
+}
+#mi_tabla_citas tbody tr td{
+	
+	    padding: 5px;
+    text-align: center;
+}

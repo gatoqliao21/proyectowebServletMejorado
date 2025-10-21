@@ -1,0 +1,92 @@
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #registro-contenedor {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  form#formulario-Log p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+
+  .content-divs {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #444;
+    font-weight: bold;
+  }
+
+  .inputs {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+
+  .inputs:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+
+  button#btnlogin {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button#btnlogin:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-registrar {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .btn-registrar a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .btn-registrar a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+  #etiqueta-respuesta p {
+    text-align: center;
+    color: red;
+    margin-top: 20px;
+  }
+
