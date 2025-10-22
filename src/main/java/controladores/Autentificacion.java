@@ -60,7 +60,7 @@ public class Autentificacion extends HttpServlet {
                 	break ;
                 	
         	case "registrar":
-                registrarCliente(jsonObject, request, response);     // 👈
+                registrarCliente(jsonObject, request, response);    
                 break;
         	
         	}
