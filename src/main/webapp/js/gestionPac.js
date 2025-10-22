@@ -7,7 +7,6 @@ const btnCerrarFormReg = document.getElementById('cerrar-formulario');
 
 const accion = 'obtenerDatos';
 
-
 miBoton.addEventListener('click',function(){
 	
 	if(window.getComputedStyle(formularioReg).display=== 'none'){
@@ -34,7 +33,6 @@ formularioReg.addEventListener('submit', function(event){
 
 	event.preventDefault();
 	
-	const regPac="registrar"
 	let nombre = $('#txtNombre').val();
 	let fecha = $('#txtfecha').val();
 	let sexo = $('#cboSexo').val();
@@ -44,7 +42,7 @@ formularioReg.addEventListener('submit', function(event){
 	
 	
 	const datos ={
-		accion: regPac,
+		accion: "registrar",
 		nombre: nombre,
 		fecha:fecha,
 		sexo:sexo,
@@ -107,7 +105,6 @@ fetch(`./GestionPacientesServlet?accion=${accion}`, {
 		        })
 		        
 		    } else {
-		        // Mensaje si el array está vacío o no es un array válido
 		        tbodyPacientes.innerHTML = '<tr><td colspan="6">No hay pacientes registrados.</td></tr>';
 		    }
 	
@@ -118,6 +115,6 @@ fetch(`./GestionPacientesServlet?accion=${accion}`, {
 	
 
 
-
+})
 
 })

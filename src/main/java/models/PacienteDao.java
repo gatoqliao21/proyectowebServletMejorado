@@ -16,6 +16,45 @@ public class PacienteDao {
 
 
 	 
+	
+public void agregarPaciente(Paciente paciente) {
+		
+
+	    	
+	    
+	    PreparedStatement ps;
+	    
+	    try(Connection con = SqlServerConexion.conectar()) {
+	    	
+		    String query = "INSERT INTO Pacientes(Nombre, Fecha, Sexo, Telefono, Direccion, Consulta, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+			ps = con.prepareStatement(query);
+			
+		    
+		    ps.setString(1, paciente.getNombre());    
+		    ps.setString(2, paciente.getFecha());    
+		    ps.setString(3, paciente.getSexo());     
+		    ps.setString(4, paciente.getTelefono()); 
+		    ps.setString(5, paciente.getDireccion());
+		    ps.setString(6, paciente.getConsulta()); 
+		    ps.setInt(7, paciente.getId()); 
+
+
+		    // Ejecución de la consulta SQL
+		 int filasAfectadas=    ps.executeUpdate();
+			
+		 System.out.println("Filas insertadas: " + filasAfectadas);			
+		 
+		 
+		 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+}
+	 
+	
 
 	 
 	 public static List<Map<String, Object>>obtenerTodosLosPacientes(int idUsuario) throws SQLException {
