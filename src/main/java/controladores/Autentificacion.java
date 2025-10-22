@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -81,14 +82,12 @@ public class Autentificacion extends HttpServlet {
 		  UsuariosDao usersDao = new UsuariosDao();
 		    JsonObject jsonResponse = new JsonObject();
 
-		    // ✅ Declarar variables fuera del try
 		    String correo = null;
 		    String nombres = null;
 		    String apellidos = null;
 		    String contrasena = null;
 
 		    try {
-		        // Usar datosJson directamente
 		        correo = datosJson.get("correo").getAsString();
 		        nombres = datosJson.get("nombre").getAsString();
 		        apellidos = datosJson.get("apellido").getAsString(); 
@@ -109,7 +108,6 @@ public class Autentificacion extends HttpServlet {
 		    Usuario usuarioReg = new Usuario(nombres, apellidos, correo, contrasena);
 
 		    try {
-		        // ❗️ FALTABA ESTA LÍNEA
 		        usersDao.registrarUsuario(usuarioReg);
 
 		        jsonResponse.addProperty("estado", true);
@@ -152,7 +150,6 @@ public class Autentificacion extends HttpServlet {
 	        	datos.addProperty("status", "success");
 	           datos.addProperty("mensaje", "validacion Correcta");
 	        } else {
-	        	// si retorna un null en la variable usuario 
 	            datos.addProperty("status", "errorVALIDACION");
 	            datos.addProperty("mensaje", "CREDENCIALES INCORRECTAS INCORRECTA");
 	        }
