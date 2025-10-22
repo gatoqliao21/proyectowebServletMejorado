@@ -89,7 +89,6 @@ fetch(`./GestionPacientesServlet?accion=${accion}`, {
 		    const tbodyPacientes = document.querySelector('#mi_tabla_citas tbody');
 		console.log(listaPacientes); // Esto es el array de pacientes
 
-		    // 2. Usar la listaPacientes para poblar la tabla
 		    if (listaPacientes && Array.isArray(listaPacientes) && listaPacientes.length > 0){
 		        
 		        tbodyPacientes.innerHTML = ''; // Limpia
