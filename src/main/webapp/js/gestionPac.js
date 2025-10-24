@@ -93,16 +93,16 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       body: JSON.stringify(datos)
     })
-      .then(response => response.json())
+      .then(response => response.json())  // procesa respuesta del servidor convirtiendolo a  json 
       .then(data => {
         console.log("Respuesta del servidor:", data);
-
+		//manejando el cuerpo de la respuesta http 
 
 		  if (data.estado) {
 		          alert(data.mensaje); 
 		          formularioReg.style.display = 'none';
 		          cargarPacientes(); 
-		        } else {
+		        } else { // si el parametro estado entra es false
 		          alert(data.mensaje); }
 		      })
 		      .catch(error => {
