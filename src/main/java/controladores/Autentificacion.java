@@ -93,6 +93,8 @@ public class Autentificacion extends HttpServlet {
 		    String contrasena = null;
 
 		    try {
+
+				// recuperamos  los datos de  del objeto de tipo  jsonObject(datosjson)
 		        correo = datosJson.get("correo").getAsString();
 		        nombres = datosJson.get("nombre").getAsString();
 		        apellidos = datosJson.get("apellido").getAsString(); 
@@ -100,30 +102,40 @@ public class Autentificacion extends HttpServlet {
 		      
 
 		    } catch (Exception e) {
+				// si no recupera datos  lanzamos una exepcion  e imprimimos en consola
 		        System.out.println("Error al leer el JSON: " + e.getMessage());
 
-		        jsonResponse.addProperty("estado", false);
-		        jsonResponse.addProperty("mensaje", "Error al procesar los datos JSON.");
-		        response.setContentType("application/json");
+
+				//objeto jsonResponse que es un objeto de tipo JsonObject que almacena la respuesta del servlet 
+				
+		        jsonResponse.addProperty("estado", false);  //este objeto jsonResponse  se le agrega propiedades   y si falla es false  
+		        jsonResponse.addProperty("mensaje", "Error al procesar los datos JSON.");  // se le agrega un mensaje como propiedad a manera de respuesta al cliente 
+		        response.setContentType("application/json");// deifinimos el contenido json 
 		        response.setCharacterEncoding("UTF-8");
-		        response.getWriter().write(jsonResponse.toString());
+		        response.getWriter().write(jsonResponse.toString());  
 		        return;
 		    }
-
-		    Usuario usuarioReg = new Usuario(nombres, apellidos, correo, contrasena);
+/*
+si la validacion es "ok "
+instanciamos un objeto de tipo Usuairo  con los datos obtenidos del 
+request JsonObject
+*/
+		    Usuario usuarioReg = new Usuario(nombres, apellidos, correo, contrasena);  
 
 		    try {
-		        usersDao.registrarUsuario(usuarioReg);
+		        usersDao.registrarUsuario(usuarioReg);   // hacemos un try al registro 
 
-		        jsonResponse.addProperty("estado", true);
+		        jsonResponse.addProperty("estado", true); // agregamos propuedades is es true 
 		        jsonResponse.addProperty("mensaje", "Usuario registrado correctamente.");
 
 		    } catch (Exception e) {
+
+				// la excepcion se lanza si el registro te lanza un false 
 		        e.printStackTrace();
 		        jsonResponse.addProperty("estado", false);
 		        jsonResponse.addProperty("mensaje", "Error al registrar usuario: " + e.getMessage());
 		    }
-
+// se valida el try y responde el servlet  
 		    response.setContentType("application/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(jsonResponse.toString());
@@ -137,14 +149,28 @@ public class Autentificacion extends HttpServlet {
 	private void autentificacionLog(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    Gson gson = new Gson();//VARIABLE PARA MANEJO DE METODOS DE LA LIBRERIA 
 	    JsonObject datos = new JsonObject();//VARIABLE PARA MANEJO DE METODOS DE LA 
-
-	    try {
-	        String correo = jsonObject.get("correo").getAsString();
+		try{
+			String correo = jsonObject.get("correo").getAsString();
 	        String contrasena = jsonObject.get("contrasena").getAsString();
 
-	        
-	        
+
+			
+		}catch(Exception){
+		        System.out.println("Error al leer el JSON: " + e.getMessage());
+
+			
+		}
+
+
 	        Usuario usuario = new UsuariosDao().autenticar(correo, contrasena);
+
+		
+		
+	    try {
+	        
+
+	        
+	        
 
 	        if (usuario != null) {
 	        	 HttpSession session = request.getSession();// obtienes la sesion 
