@@ -130,8 +130,8 @@ public class Autentificacion extends HttpServlet {
 	}
 
 	private void autentificacionLog(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
-	    Gson gson = new Gson();
-	    JsonObject datos = new JsonObject();
+	    Gson gson = new Gson();//VARIABLE PARA MANEJO DE METODOS DE LA LIBRERIA 
+	    JsonObject datos = new JsonObject();//VARIABLE PARA MANEJO DE METODOS DE LA 
 
 	    try {
 	        String correo = jsonObject.get("correo").getAsString();
@@ -142,12 +142,12 @@ public class Autentificacion extends HttpServlet {
 	        Usuario usuario = new UsuariosDao().autenticar(correo, contrasena);
 
 	        if (usuario != null) {
-	        	 HttpSession session = request.getSession();
-	        	    session.setAttribute("usuarioLogeado", usuario);
-	        	    System.out.println("Usuario guardado en sesión: " + usuario.getCorreo());
+	        	 HttpSession session = request.getSession();// obtienes la sesion 
+	        	    session.setAttribute("usuarioLogeado", usuario);  // objeto de tipo http se asigna al usuario autentificado 
+	        	    System.out.println("Usuario guardado en sesión: " + usuario.getCorreo());   
 
 	        	
-	        	datos.addProperty("status", "success");
+	        	datos.addProperty("status", "success"); // estado exitoso  al estado de validacion 
 	           datos.addProperty("mensaje", "validacion Correcta");
 	        } else {
 	            datos.addProperty("status", "errorVALIDACION");
