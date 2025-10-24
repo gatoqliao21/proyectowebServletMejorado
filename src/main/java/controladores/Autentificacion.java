@@ -48,19 +48,24 @@ public class Autentificacion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    JsonObject jsonObject = null;
+	   
+		//objeto de tipo jsonObject
+		JsonObject datosJsonRecuperados = null;
 
         
         try {
-        	  jsonObject = JsonParser.parseReader(request.getReader()).getAsJsonObject();
-              String accion = jsonObject.get("accion").getAsString();
+
+			//parseo del json obtenido con la lectura si en el cuerpo de la solicitud http no es json lanza una excepcion 
+			// getAsJsonObject() => excepcion is null
+        	  datosJsonRecuperados = JsonParser.parseReader(request.getReader()).getAsJsonObject();
+              String accion = datosJsonRecuperados.get("accion").getAsString();
         	switch(accion) {
         	case "login":
-                autentificacionLog(jsonObject,request, response);
+                autentificacionLog(datosJsonRecuperados,request, response);
                 	break ;
                 	
         	case "registrar":
-                registrarCliente(jsonObject, request, response);    
+                registrarCliente(datosJsonRecuperados, request, response);    
                 break;
         	
         	}
