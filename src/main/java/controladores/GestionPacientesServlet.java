@@ -42,25 +42,29 @@ public class GestionPacientesServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	
+	//parametro accion doget obtiene los datos de la BD   registrados de la tabla pacientes 
 	String accion = request.getParameter("accion");
 	
 	response.setContentType("application/json");
 	response.setCharacterEncoding("UTF-8");
-	HttpSession session = request.getSession(false);
-    PrintWriter out = response.getWriter();
+	HttpSession session = request.getSession(false); // obtiene la sesion actual , si no existe   devuele null
+    PrintWriter out = response.getWriter();// objeto de tipo printwriter  que permite enviar respuesta al cliente 
     Gson gson = new Gson();
-    Usuario sesionUsuario = (Usuario) session.getAttribute("usuarioLogeado");
+
+		//manejando estado de la sesion
+    Usuario sesionUsuario = (Usuario) session.getAttribute("usuarioLogeado");// OBTIENES  UN ATRIBUTO DE LA SESION INICIADA 
 
     if (sesionUsuario == null) {
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Código 401
-        out.print(gson.toJson(Collections.singletonMap("error", "Usuario no autenticado.")));
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Código 401  al logear usuario  mandando un error de autentificacion 
+        out.print(gson.toJson(Collections.singletonMap("error", "Usuario no autenticado.")));   
         return; 
     }
 
 		
 		int idUsuario=  sesionUsuario.getId();
-		
+
+
+		// aca vamos a obtener la lista de pacientes de PACDAO 
 		List<Map<String,Object>>listaPacientes;
 		
 		try {
@@ -102,7 +106,7 @@ JsonObject jsonObject = null;
                 	break ;
                 	
         	case "eliminar":
-                //EliminarPac(jsonObject, request, response);     // 👈
+                
                 break;
         	
         	}
