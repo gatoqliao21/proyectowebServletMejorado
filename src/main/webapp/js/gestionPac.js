@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnFormRegistrar = document.getElementById('miBoton');
   const formularioReg = document.getElementById('contenedorGeneral');
   const btnCerrarFormReg = document.getElementById('cerrar-formulario');
-  const tbodyPacientes = document.querySelector('#mi_tabla_citas tbody'); // ✅ se añadió esta línea
-
+  const tbodyPacientes = document.querySelector('#mi_tabla_citas tbody'); 
   const accion = 'obtenerDatos';
 
   
@@ -35,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
          }
        })
        .catch(error => {
-         console.error("❌ Error al cargar pacientes:", error);
+         console.error("Error al cargar pacientes:", error);
          tbodyPacientes.innerHTML = '<tr><td colspan="6">Error al cargar los pacientes.</td></tr>';
        });
    }
