@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
   function cargarPacientes() {
      fetch(`./GestionPacientesServlet?accion=${accion}`)
        .then(response => {
-         if (!response.ok) throw new Error('Error al obtener pacientes');
+         if (!response.ok) throw new Error('Error al obtener pacientes');// excepcion obtenida ante la respuesta null 
          return response.json();
        })
-       .then(listaPacientes => {
+       .then(listaPacientes => {   //manejo de lista devuelta por el servlet 
          tbodyPacientes.innerHTML = ''; 
 
          if (Array.isArray(listaPacientes) && listaPacientes.length > 0) {
@@ -29,12 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
              `;
              tbodyPacientes.appendChild(fila);
            });
-         } else {
+         } else {  //se llama al else siempre y cuando no tengamos una lista pacinetes ni  una cantidad mayor a 0 
            tbodyPacientes.innerHTML = '<tr><td colspan="6">No hay pacientes registrados.</td></tr>';
          }
        })
        .catch(error => {
-         console.error("Error al cargar pacientes:", error);
+         
+		   console.error("Error al cargar pacientes:", error);
          tbodyPacientes.innerHTML = '<tr><td colspan="6">Error al cargar los pacientes.</td></tr>';
        });
    }
