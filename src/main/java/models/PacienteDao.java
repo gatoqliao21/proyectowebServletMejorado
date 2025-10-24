@@ -58,7 +58,9 @@ public void agregarPaciente(Paciente paciente) {
 
 	 
 	 public static List<Map<String, Object>>obtenerTodosLosPacientes(int idUsuario) throws SQLException {
-	        
+
+
+		 //declaramos una lista en este ambito de funcion 
 	        List<Map<String, Object>> listaPacientes = new ArrayList<>();
 
 	       
@@ -70,7 +72,7 @@ public void agregarPaciente(Paciente paciente) {
 	        		Connection con = SqlServerConexion.conectar();
 	        		PreparedStatement pstmt = con.prepareStatement(sql)		){          		
 	        	pstmt.setInt(1, idUsuario);
-	        	
+	        	//retorna un resultset en formato de tabla con el executequery 
 	            try (ResultSet rs = pstmt.executeQuery()) { 
 	        		   while (rs.next()) {
 	     	              
@@ -83,7 +85,8 @@ public void agregarPaciente(Paciente paciente) {
 	   	            	paciente.put("Consulta",rs.getString("Consulta"));
 
 	   	            	
-	   	            	
+	   	            	//por cada iteracion del bucle se agrega un paciente a la lista 
+						
 	   	             listaPacientes.add(paciente);
 
 	   	            	
@@ -94,6 +97,7 @@ public void agregarPaciente(Paciente paciente) {
 	         
 	            
 	        }
+		 // retorna la lista completa  de pacientes registrados 
 	            return listaPacientes;
 	           
 	    }
