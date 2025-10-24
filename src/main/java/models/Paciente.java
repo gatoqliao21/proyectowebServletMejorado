@@ -10,6 +10,7 @@ public class Paciente {
     String telefono;
     String direccion;
     String consulta;
+     int usuarioId; 
     
 	public Paciente(int id, String nombre, String fecha, String sexo, String telefono, String direccion, String consulta) {
 		super();
@@ -21,7 +22,7 @@ public class Paciente {
 		this.consulta = consulta;
 	}
     
-	public Paciente(String nombre, String fecha, String sexo, String telefono, String direccion, String consulta) {
+	public Paciente(String nombre, String fecha, String sexo, String telefono, String direccion, String consulta, int ususuarioId) {
 		super();
 		this.nombre = nombre;
 		this.fecha = fecha;
@@ -29,10 +30,13 @@ public class Paciente {
 		this.telefono = telefono;
 		this.direccion = direccion;
 		this.consulta = consulta;
+		this.usuarioId= ususuarioId;
 	}
 	public Paciente() {
 		super();
 	}
+	
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -77,7 +81,12 @@ public class Paciente {
 	public void setConsulta(String consulta) {
 		this.consulta = consulta;
 	}
-
+	public int getusuarioId() {
+		return usuarioId;
+	}
+	public void setusuarioId(int usuarioId) {
+		this.usuarioId = usuarioId;
+	}
 	
 	
 	

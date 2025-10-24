@@ -147,8 +147,19 @@ JsonObject jsonObject = null;
 				    	telefono = datosJson.get("telefono").getAsString();	
 				    	direccion = datosJson.get("direccion").getAsString();	
 				    	consulta = datosJson.get("consulta").getAsString();	
+				        boolean existe = pacienteReg.existePaciente(nombre, fecha, telefono, idUsuario);
+				        if (existe) {
+				            jsonResponse.addProperty("estado", false);
+				            jsonResponse.addProperty("mensaje", "Ya existe un paciente con esos datos.");
+				        } else {
+				            Paciente paciente = new Paciente(nombre, fecha, sexo, telefono, direccion, consulta, idUsuario);
+				            pacienteReg.agregarPaciente(paciente);
+				            jsonResponse.addProperty("estado", true);
+				            jsonResponse.addProperty("mensaje", "Paciente registrado con éxito.");
+				        }
 
 				
+				    	
 				    }catch(Exception e) {
 				    	
 				        System.out.println("Error al leer el JSON: " + e.getMessage());
@@ -160,7 +171,7 @@ JsonObject jsonObject = null;
 				    	return;
 				    }
 				        
-				    	Paciente Paciente = new Paciente(idUsuario, nombre, fecha, sexo, telefono, direccion, consulta);
+				    	Paciente Paciente = new Paciente(nombre, fecha, sexo, telefono, direccion, consulta, idUsuario);
 				    
 				  try {
 					  

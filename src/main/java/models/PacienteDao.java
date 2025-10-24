@@ -37,7 +37,7 @@ public void agregarPaciente(Paciente paciente) {
 		    ps.setString(4, paciente.getTelefono()); 
 		    ps.setString(5, paciente.getDireccion());
 		    ps.setString(6, paciente.getConsulta()); 
-		    ps.setInt(7, paciente.getId()); 
+		    ps.setInt(7, paciente.getusuarioId()); 
 
 
 		    // Ejecución de la consulta SQL
@@ -97,6 +97,28 @@ public void agregarPaciente(Paciente paciente) {
 	            return listaPacientes;
 	           
 	    }
+	 
+	 public boolean existePaciente(String nombre, String fecha, String telefono, int usuarioId) {
+		    String sql = "SELECT COUNT(*) FROM Pacientes WHERE Nombre = ? AND Fecha = ? AND Telefono = ? AND usuario_id = ?";
+		    
+		    try (Connection con = SqlServerConexion.conectar();
+		         PreparedStatement ps = con.prepareStatement(sql)) {
+		        
+		        ps.setString(1, nombre);
+		        ps.setString(2, fecha);
+		        ps.setString(3, telefono);
+		        ps.setInt(4, usuarioId);
+
+		        ResultSet rs = ps.executeQuery();
+		        if (rs.next()) {
+		            return rs.getInt(1) > 0; // true si ya existe
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return false;
+		}
+
 		
 	
 }
