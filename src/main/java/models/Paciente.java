@@ -4,14 +4,107 @@ public class Paciente {
 
 	
 	int id ;
+	String  parentesco;
+	 String dni;
+	String  sexo;
+	String  apellidoPat;
+	String  apellidoMat;
+	
 	String nombre;
     String fecha;
-    String sexo;
+    String correo;
     String telefono;
     String direccion;
     String consulta;
      int usuarioId; 
     
+	public Paciente(int id, String parentesco, String dni, String sexo, String apellidoPat, String apellidoMat,
+			String nombre, String fecha, String correo, String telefono, String direccion, String consulta,
+			int usuarioId) {
+		super();
+		this.id = id;
+		this.parentesco = parentesco;
+		this.dni = dni;
+		this.sexo = sexo;
+		this.apellidoPat = apellidoPat;
+		this.apellidoMat = apellidoMat;
+		this.nombre = nombre;
+		this.fecha = fecha;
+		this.correo = correo;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.consulta = consulta;
+		this.usuarioId = usuarioId;
+	}
+	
+	
+
+	public Paciente(String parentesco, String dni, String sexo, String apellidoPat, String apellidoMat, String nombre,
+			String fecha, String correo, String telefono, String direccion, String consulta) {
+		super();
+		this.parentesco = parentesco;
+		this.dni = dni;
+		this.sexo = sexo;
+		this.apellidoPat = apellidoPat;
+		this.apellidoMat = apellidoMat;
+		this.nombre = nombre;
+		this.fecha = fecha;
+		this.correo = correo;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.consulta = consulta;
+	}
+
+
+
+	public String getParentesco() {
+		return parentesco;
+	}
+
+	 public void setParentesco(String parentesco) {
+		 this.parentesco = parentesco;
+	 }
+
+	 public String getDni() {
+		 return dni;
+	 }
+
+	 public void setDni(String dni) {
+		 this.dni = dni;
+	 }
+
+	 public String getApellidoPat() {
+		 return apellidoPat;
+	 }
+
+	 public void setApellidoPat(String apellidoPat) {
+		 this.apellidoPat = apellidoPat;
+	 }
+
+	 public String getApellidoMat() {
+		 return apellidoMat;
+	 }
+
+	 public void setApellidoMat(String apellidoMat) {
+		 this.apellidoMat = apellidoMat;
+	 }
+
+	 public String getCorreo() {
+		 return correo;
+	 }
+
+	 public void setCorreo(String correo) {
+		 this.correo = correo;
+	 }
+
+	 public int getUsuarioId() {
+		 return usuarioId;
+	 }
+
+	 public void setUsuarioId(int usuarioId) {
+		 this.usuarioId = usuarioId;
+	 }
+
 	public Paciente(int id, String nombre, String fecha, String sexo, String telefono, String direccion, String consulta) {
 		super();
 		this.nombre = nombre;

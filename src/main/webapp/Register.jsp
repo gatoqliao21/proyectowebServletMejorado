@@ -13,20 +13,41 @@
 <body>
 
 <form id="formulario-Register"  >
-
-		<label>Correo:</label>
-		<input class="inputs" type="email"  id="correo-txt"  >
+		
+		
+		<label>DNI:</label>
+		<input class="inputs" type="text"  id ="dni-txt"  required >
 		<br>
 		<label>nombres:</label>
-		<input class="inputs" type="text"  id ="nombre-txt"  >
-<br>
-<label>Apellidos:</label>
-		<input class="inputs" type="text"  id="Apellido-txt">
-<br>
-<label>contrasena:</label>
-		<input class="inputs" type="Password"   id="contrasena-txt">
-<br>
-<button type="submit" class="buttons" id="btn-submit" >Registrar		</button>
+		<input class="inputs" type="text"  id ="nombre-txt" required >
+		<br>
+		<label>Apellidos:</label>
+		<input class="inputs" type="text"  id="Apellido-txt" required>
+		<br>
+		<div>
+		<label  for="sexo">Genero</label>
+          <select class="inputs" id="Sexo-txt"  required >
+          		<option value="Masculino">Masculino</option>	          
+          		<option value="Femenino">Femenino</option>
+          </select>
+          
+          
+		</div>
+		<br>
+    	<div class="labelcontainer">
+			<label>Fecha de Nacimiento</label>
+			<input  class="inputs"  id="txtfecha" type="date" name="fecha_nacimiento"  required>
+       </div>
+
+		<br>
+		<label>Correo:</label>
+				<input class="inputs" type="email"  id="correo-txt"  required>
+				<br>
+		
+		<label>contrasena:</label>
+				<input class="inputs" type="Password"   id="contrasena-txt" required>
+		<br>
+		<button type="submit" class="buttons" id="btn-submit" >Registrar		</button>
 
 </form>
 

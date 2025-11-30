@@ -10,12 +10,24 @@ formularioRegister.addEventListener('submit', function (e) {
   
 
   const datos = {
+	dni: document.getElementById('dni-txt').value,
     nombre: document.getElementById('nombre-txt').value,
     apellido: document.getElementById('Apellido-txt').value,
+	genero: document.getElementById('Sexo-txt').value,
+	fechaNac: document.getElementById('txtfecha').value,
     correo: document.getElementById('correo-txt').value,
     contrasena: document.getElementById('contrasena-txt').value,
 	accion: registrar,
 	  };
+	  
+	  
+	  
+	  if (!datos.dni || !datos.genero || !datos.apellido|| !datos.nombre || !datos.fechaNac || !datos.correo || !datos.contrasena) {
+	      alert("Completa todos los campos antes de continuar.");
+	      return;
+	    }
+	  
+	  
 
   fetch('./Autentificacion', {
     method: 'POST',

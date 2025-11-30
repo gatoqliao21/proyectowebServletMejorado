@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import models.Paciente;
 import models.PacienteDao;
 import models.Usuario;
+import models.UsuariosDao;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -101,12 +102,18 @@ JsonObject jsonObject = null;
         	  jsonObject = JsonParser.parseReader(request.getReader()).getAsJsonObject();
               String accion = jsonObject.get("accion").getAsString();
         	switch(accion) {
+        	
+        	
         	case "registrar":
                 regPaciente(jsonObject,request, response);
                 	break ;
                 	
         	case "eliminar":
+<<<<<<< HEAD
                 
+=======
+                EliminarPac(jsonObject, request, response);     
+>>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
                 break;
         	
         	}
@@ -124,6 +131,32 @@ JsonObject jsonObject = null;
 		
 	}
 
+	
+
+	private void EliminarPac(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) {
+				
+		
+		PacienteDao PacienteDao = new PacienteDao();
+		JsonObject jsonResponse = new JsonObject();
+		
+		
+		String DNIPaciente= null;
+		try {
+			DNIPaciente = jsonObject.get("DNI").getAsString();
+
+			
+			PacienteDao.eliminarPaciente(DNIPaciente);
+			
+		}catch(Exception e) {
+			
+			
+			
+		}
+		
+		
+		
+	}
+
 	private void regPaciente(JsonObject datosJson, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		
@@ -135,35 +168,52 @@ JsonObject jsonObject = null;
 				int idUsuario=  sesionUsuario.getId();
 
 			    
-			    
+			String parentesco=null;
+
+			String dni=null;
+
+			String sexo=null;
+
+			String apellidoPat=null;
+			String apellidoMat=null;
+			
 			String 	nombre=null;
 			String fecha=null;
-			String	sexo=null;
+			String correo=null;
 			String telefono=null;
 			String 	direccion= null;
 			String 	consulta= null;
 
 				    try {
 				        // Usar datosJson directamente
+				    	parentesco = datosJson.get("parentesco").getAsString();
+				    	dni = datosJson.get("dni").getAsString();
+				    	sexo = datosJson.get("sexo").getAsString(); 
+
+				    	apellidoPat = datosJson.get("apellidoPat").getAsString(); 
+				    	apellidoMat = datosJson.get("apellidoMat").getAsString(); 
+				    	
 				    	nombre = datosJson.get("nombre").getAsString();
 				    	fecha = datosJson.get("fecha").getAsString();
-				    	sexo = datosJson.get("sexo").getAsString(); 
+				    	correo= datosJson.get("correo").getAsString();	
+
 				    	telefono = datosJson.get("telefono").getAsString();	
 				    	direccion = datosJson.get("direccion").getAsString();	
 				    	consulta = datosJson.get("consulta").getAsString();	
-				        boolean existe = pacienteReg.existePaciente(nombre, fecha, telefono, idUsuario);
+				    	boolean existe = pacienteReg.existePaciente(dni);
 				        if (existe) {
 				            jsonResponse.addProperty("estado", false);
 				            jsonResponse.addProperty("mensaje", "Ya existe un paciente con esos datos.");
 				        } else {
-				            Paciente paciente = new Paciente(nombre, fecha, sexo, telefono, direccion, consulta, idUsuario);
+				            // PRIMER Y ÚNICO REGISTRO
+				            Paciente paciente = new Paciente(idUsuario, parentesco, dni, sexo, apellidoPat, apellidoMat, nombre, fecha, correo, telefono, direccion, consulta, idUsuario);
 				            pacienteReg.agregarPaciente(paciente);
 				            jsonResponse.addProperty("estado", true);
 				            jsonResponse.addProperty("mensaje", "Paciente registrado con éxito.");
 				        }
 
 				
-				    	
+				    	// Si hubo un error en el JSON, el flujo sale aquí.
 				    }catch(Exception e) {
 				    	
 				        System.out.println("Error al leer el JSON: " + e.getMessage());
@@ -175,22 +225,6 @@ JsonObject jsonObject = null;
 				    	return;
 				    }
 				        
-				    	Paciente Paciente = new Paciente(nombre, fecha, sexo, telefono, direccion, consulta, idUsuario);
-				    
-				  try {
-					  
-				pacienteReg.agregarPaciente(Paciente);
-				jsonResponse.addProperty("estado",true);
-				jsonResponse.addProperty("mensaje","cita concertada");
-					  
-				  		
-				} catch (Exception e) {
-					e.printStackTrace();
-					jsonResponse.addProperty("estado", false);
-			        jsonResponse.addProperty("mensaje", "Error al registrar paciente: " + e.getMessage());
-					
-				
-				}
 				    	
 				    response.setContentType("application/json");
 				    response.setCharacterEncoding("UTF-8");

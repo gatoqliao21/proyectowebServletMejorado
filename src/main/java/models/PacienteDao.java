@@ -14,9 +14,13 @@ import configuraciones.SqlServerConexion;
 
 public class PacienteDao {
 
-
-	 
-	
+// PENDIENTE IMPLEMENTAR
+	public void eliminarPaciente(String dni)
+	{
+		
+		
+		
+	}	
 public void agregarPaciente(Paciente paciente) {
 		
 
@@ -26,7 +30,7 @@ public void agregarPaciente(Paciente paciente) {
 	    
 	    try(Connection con = SqlServerConexion.conectar()) {
 	    	
-		    String query = "INSERT INTO Pacientes(Nombre, Fecha, Sexo, Telefono, Direccion, Consulta, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		    String query = "INSERT INTO Pacientes(Nombre, Fecha, Sexo, Telefono, Direccion, Consulta, usuario_id, parentesco , dni , apellidoPat , apellidoMat , correo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			ps = con.prepareStatement(query);
 			
@@ -38,7 +42,12 @@ public void agregarPaciente(Paciente paciente) {
 		    ps.setString(5, paciente.getDireccion());
 		    ps.setString(6, paciente.getConsulta()); 
 		    ps.setInt(7, paciente.getusuarioId()); 
-
+		    ps.setString(8, paciente.getParentesco()); 
+		    ps.setString(9, paciente.getDni()); 
+		    ps.setString(10, paciente.getApellidoPat()); 
+		    ps.setString(11, paciente.getApellidoMat()); 
+		    
+		    ps.setString(12, paciente.getCorreo());
 
 		    // Ejecución de la consulta SQL
 		 int filasAfectadas=    ps.executeUpdate();
@@ -66,7 +75,7 @@ public void agregarPaciente(Paciente paciente) {
 	       
 		
 
-	        String sql = "SELECT Nombre, Fecha, Sexo, Telefono, Direccion, Consulta FROM Pacientes WHERE usuario_id = ?";
+	        String sql = "SELECT ID, Nombre, Sexo, Telefono,DNI, Consulta FROM Pacientes WHERE usuario_id = ?";
 	            
 	        try (
 	        		Connection con = SqlServerConexion.conectar();
@@ -77,12 +86,12 @@ public void agregarPaciente(Paciente paciente) {
 	        		   while (rs.next()) {
 	     	              
 	   	            	Map<String, Object> paciente= new HashMap<>();
+	   	            	paciente.put("id",rs.getString("ID"));
 	   	            	paciente.put("nombre",rs.getString("Nombre"));
-	   	            	paciente.put("Fecha",rs.getString("Fecha"));
 	   	            	paciente.put("Sexo",rs.getString("Sexo"));
 	   	            	paciente.put("Telefono",rs.getString("Telefono"));
-	   	            	paciente.put("Direccion",rs.getString("Direccion"));
 	   	            	paciente.put("Consulta",rs.getString("Consulta"));
+	   	            	paciente.put("DNI",rs.getString("DNI"));
 
 	   	            	
 	   	            	//por cada iteracion del bucle se agrega un paciente a la lista 
@@ -102,17 +111,14 @@ public void agregarPaciente(Paciente paciente) {
 	           
 	    }
 	 
-	 public boolean existePaciente(String nombre, String fecha, String telefono, int usuarioId) {
-		    String sql = "SELECT COUNT(*) FROM Pacientes WHERE Nombre = ? AND Fecha = ? AND Telefono = ? AND usuario_id = ?";
+	 public boolean existePaciente(String dni) {
+		    String sql = "SELECT COUNT(*) FROM Pacientes WHERE DNI=?";
 		    
 		    try (Connection con = SqlServerConexion.conectar();
 		         PreparedStatement ps = con.prepareStatement(sql)) {
 		        
-		        ps.setString(1, nombre);
-		        ps.setString(2, fecha);
-		        ps.setString(3, telefono);
-		        ps.setInt(4, usuarioId);
-
+		        ps.setString(1, dni);
+		    
 		        ResultSet rs = ps.executeQuery();
 		        if (rs.next()) {
 		            return rs.getInt(1) > 0; // true si ya existe

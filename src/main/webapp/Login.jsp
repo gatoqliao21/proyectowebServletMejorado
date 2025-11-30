@@ -43,10 +43,7 @@
 			</form>
 	</div>
 
-					<div id="etiqueta-respuesta">
-			    <p></p>
-			</div>
-		
+					<jsp:include page="items/mensaje_respuesta.jsp"></jsp:include>
 
 
 

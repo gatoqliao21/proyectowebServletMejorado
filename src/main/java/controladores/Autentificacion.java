@@ -54,12 +54,24 @@ public class Autentificacion extends HttpServlet {
 
         
         try {
+<<<<<<< HEAD
 
 			//parseo del json obtenido con la lectura si en el cuerpo de la solicitud http no es json lanza una excepcion 
 			// getAsJsonObject() => excepcion is null
         	  datosJsonRecuperados = JsonParser.parseReader(request.getReader()).getAsJsonObject();
               String accion = datosJsonRecuperados.get("accion").getAsString();
         	switch(accion) {
+=======
+        	
+        	
+        	
+        	  jsonObject = JsonParser.parseReader(request.getReader()).getAsJsonObject();
+              String accion = jsonObject.get("accion").getAsString();
+              System.out.println(" JSON recibido: " + jsonObject);
+
+              
+              switch(accion) {
+>>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
         	case "login":
                 autentificacionLog(datosJsonRecuperados,request, response);
                 	break ;
@@ -81,17 +93,25 @@ public class Autentificacion extends HttpServlet {
 	
 		
 	}
+    private void registrarCliente(JsonObject datosJson, HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+    	System.out.println("Datos recibidos en registrarCliente: " + datosJson);
 
-	private void registrarCliente(JsonObject datosJson, HttpServletRequest request, HttpServletResponse response) throws IOException {
-	   
-		  UsuariosDao usersDao = new UsuariosDao();
-		    JsonObject jsonResponse = new JsonObject();
+        UsuariosDao usersDao = new UsuariosDao();
+        JsonObject jsonResponse = new JsonObject();
+        Gson gson = new Gson();
 
-		    String correo = null;
-		    String nombres = null;
-		    String apellidos = null;
-		    String contrasena = null;
+        String dni = null;
+        String genero = null;
+        
+        String fechaNac= null;
+        String correo = null;
+        String  nombres= null;
+        String apellidos = null;
+        String contrasena= null;
+        try {
 
+<<<<<<< HEAD
 		    try {
 
 				// recuperamos  los datos de  del objeto de tipo  jsonObject(datosjson)
@@ -195,5 +215,93 @@ request JsonObject
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().write(gson.toJson(datos));
 	}
+=======
+
+            dni= datosJson.get("dni").getAsString();
+            genero=datosJson.get("genero").getAsString();
+            fechaNac=datosJson.get("fechaNac").getAsString();
+        	correo = datosJson.get("correo").getAsString();
+	        nombres = datosJson.get("nombre").getAsString();
+	        apellidos = datosJson.get("apellido").getAsString(); 
+	        contrasena = datosJson.get("contrasena").getAsString();
+	        
+        	
+        	
+        	
+
+            if (usersDao.existeUsuario(dni, correo)) {
+                jsonResponse.addProperty("estado", false);
+                jsonResponse.addProperty("mensaje", "Ya existe un usuario con ese DNI o correo.");
+            } else {
+            	Usuario usuarioReg = new Usuario(dni, nombres, apellidos, correo, fechaNac, genero, contrasena);
+
+                Usuario usuarioCreado = usersDao.registrarUsuario(usuarioReg); // debe devolver el usuario o null
+                	 
+            	  if (usuarioCreado != null) {
+                      jsonResponse.addProperty("estado", true);
+                      jsonResponse.addProperty("mensaje", "Usuario registrado correctamente.");
+                  } else {
+                      jsonResponse.addProperty("estado", false);
+                      jsonResponse.addProperty("mensaje", "No se pudo registrar el usuario (error en la base de datos).");
+                  }
+            
+            
+            
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonResponse.addProperty("estado", false);
+            jsonResponse.addProperty("mensaje", "Error al procesar el registro: " + e.getMessage());
+        }
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(gson.toJson(jsonResponse));
+    }
+
+	private void autentificacionLog(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	   
+	/*	HttpSession  misesionactiva=  request.getSession();*/	
+		Gson gson = new Gson();
+	    JsonObject datos = new JsonObject();
+//		if(misesionactiva == null) {   		
+					
+			
+				    try {
+				        String correo = jsonObject.get("correo").getAsString();
+				        String contrasena = jsonObject.get("contrasena").getAsString();
+			
+				        
+				        
+				        Usuario usuario = new UsuariosDao().autenticar(correo, contrasena);
+			
+				        if (usuario != null) {
+				        	 HttpSession session = request.getSession();
+				        	 
+				        	 
+				        	    session.setAttribute("usuarioLogeado", usuario);
+				        	    System.out.println("Usuario guardado en sesión: " + usuario.getCorreo());
+			
+				        	
+				        	datos.addProperty("status", "success");
+				           datos.addProperty("mensaje", "validacion Correcta");
+				        } else {
+				            datos.addProperty("status", "errorVALIDACION");
+				            datos.addProperty("mensaje", "Credenciales Incorrectas");
+				        }
+			
+				    } catch (Exception e) {
+				        datos.addProperty("status", "error");
+				        datos.addProperty("mensaje", "Error procesando la solicitud: " + e.getMessage());
+				        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				    }
+			
+				    response.setContentType("application/json");
+				    response.setCharacterEncoding("UTF-8");
+				    response.getWriter().write(gson.toJson(datos));
+				}
+
+>>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
 
 }

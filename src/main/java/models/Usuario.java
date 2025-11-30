@@ -3,29 +3,112 @@ package models;
 public class Usuario {
 
 	int id ;
+	String dni;
 	String nombre;
     String apellido;
     String correo;
+    String fechNac;
+
+  
+	String sexo;
     String contrasena;
-	public Usuario(int id, String nombre, String apellido, String correo, String contrasena) {
+    String tipoDeSangre;
+    String altura;
+    String peso;
+
+    
+    
+    
+	public Usuario(int id, String dni, String nombre, String apellido, String correo, String fechNac, String sexo,
+			String contrasena) {
 		super();
 		this.id = id;
+		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = correo;
+		this.fechNac = fechNac;
+		this.sexo = sexo;
 		this.contrasena = contrasena;
 	}
+
+	public String getFechNac() {
+		return fechNac;
+	}
+
+	public void setFechNac(String fechNac) {
+		this.fechNac = fechNac;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public String getTipoDeSangre() {
+		return tipoDeSangre;
+	}
+
+	public void setTipoDeSangre(String tipoDeSangre) {
+		this.tipoDeSangre = tipoDeSangre;
+	}
+
+	public String getAltura() {
+		return altura;
+	}
+
+	public void setAltura(String altura) {
+		this.altura = altura;
+	}
+
+	public String getPeso() {
+		return peso;
+	}
+
+	public void setPeso(String peso) {
+		this.peso = peso;
+	}
+
+
+
 	
-	public Usuario( String nombre, String apellido, String correo, String contrasena) {
+	  public Usuario(int id, String dni, String nombre, String apellido, String correo, String fechNac, String sexo,
+			String contrasena, String tipoDeSangre, String altura, String peso) {
 		super();
-		
+		this.id = id;
+		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = correo;
+		this.fechNac = fechNac;
+		this.sexo = sexo;
 		this.contrasena = contrasena;
+		this.tipoDeSangre = tipoDeSangre;
+		this.altura = altura;
+		this.peso = peso;
 	}
-	
-	
+
+	  public Usuario(String dni,String nombre, String apellido, String correo, String fechNac, String sexo, String contrasena) {
+			super();
+			this.dni=dni;
+			this.nombre = nombre;
+			this.apellido = apellido;
+			this.correo = correo;
+			this.fechNac = fechNac;
+			this.sexo = sexo;
+			this.contrasena = contrasena;
+		}
+	public String getDni() {
+		return dni;
+	}
+
+	  public void setDni(String dni) {
+		  this.dni = dni;
+	  }
+
 	public Usuario() {
 		super();
 	}
