@@ -144,7 +144,7 @@ JsonObject jsonObject = null;
 		try {
 			DNIPaciente = jsonObject.get("DNI").getAsString();
 
-			
+			// PENDIENTE IMPLEMENTAR
 			PacienteDao.eliminarPaciente(DNIPaciente);
 			
 		}catch(Exception e) {
