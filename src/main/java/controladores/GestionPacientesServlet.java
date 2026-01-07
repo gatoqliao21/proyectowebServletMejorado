@@ -50,11 +50,15 @@ public class GestionPacientesServlet extends HttpServlet {
 	response.setCharacterEncoding("UTF-8");
 	HttpSession session = request.getSession(false); // obtiene la sesion actual , si no existe   devuele null
     PrintWriter out = response.getWriter();// objeto de tipo printwriter  que permite enviar respuesta al cliente 
+    response.setStatus(HttpServletResponse.SC_OK); // Código 200
     Gson gson = new Gson();
+    
 
 		//manejando estado de la sesion
     Usuario sesionUsuario = (Usuario) session.getAttribute("usuarioLogeado");// OBTIENES  UN ATRIBUTO DE LA SESION INICIADA 
 
+    
+    //  validacion si la sesion obtenida es null 
     if (sesionUsuario == null) {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Código 401  al logear usuario  mandando un error de autentificacion 
         out.print(gson.toJson(Collections.singletonMap("error", "Usuario no autenticado.")));   
@@ -71,10 +75,11 @@ public class GestionPacientesServlet extends HttpServlet {
 		try {
 			
 			listaPacientes= PacienteDao.obtenerTodosLosPacientes(idUsuario);
-			
+			// devolvemos la repsuesta al fetch
             out.print(gson.toJson(listaPacientes));
-
+            out.flush();
             System.out.println(listaPacientes);
+            
 			
 	}
 	catch(Exception e) {
@@ -109,12 +114,16 @@ JsonObject jsonObject = null;
                 	break ;
                 	
         	case "eliminar":
-<<<<<<< HEAD
-                
-=======
+
                 EliminarPac(jsonObject, request, response);     
->>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
+
                 break;
+                
+        	case "editar" :
+        		
+                EditarPac(jsonObject, request, response);     
+
+        		break;
         	
         	}
         	
@@ -133,23 +142,47 @@ JsonObject jsonObject = null;
 
 	
 
-	private void EliminarPac(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) {
+	private void EditarPac(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void EliminarPac(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
 				
-		
+	    PrintWriter out = response.getWriter();// objeto de tipo printwriter  que permite enviar respuesta al cliente 
+	    Gson gson = new Gson();
+	    PrintWriter outE  = response.getWriter();
 		PacienteDao PacienteDao = new PacienteDao();
-		JsonObject jsonResponse = new JsonObject();
-		
-		
+		 
+	    Gson gson1 = new Gson();
+        JsonObject json = new JsonObject();
+
 		String DNIPaciente= null;
+		
+		
+		
 		try {
 			DNIPaciente = jsonObject.get("DNI").getAsString();
 
 			// PENDIENTE IMPLEMENTAR
-			PacienteDao.eliminarPaciente(DNIPaciente);
+			boolean  pacEliminado=	PacienteDao.eliminarPaciente(DNIPaciente);
+			String mensje="paciente eliminado correctamente";
 			
+
+			json.addProperty("estado", pacEliminado);	
+			json.addProperty("mensaje", mensje);	
+			 out.print(json);
+	            out.flush();			
 		}catch(Exception e) {
 			
-			
+			System.out.println("Error al leer el JSON: " + e.getMessage());
+			json.addProperty("estado", false);
+			json.addProperty("mensaje", "Error al procesar los datos json");
+	    	response.setContentType("application/json");
+	    	response.setCharacterEncoding("UTF-8");
+	    	out.print(json);
+            out.flush();
+	    	return;
 			
 		}
 		

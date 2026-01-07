@@ -54,24 +54,20 @@ public class Autentificacion extends HttpServlet {
 
         
         try {
-<<<<<<< HEAD
 
 			//parseo del json obtenido con la lectura si en el cuerpo de la solicitud http no es json lanza una excepcion 
 			// getAsJsonObject() => excepcion is null
         	  datosJsonRecuperados = JsonParser.parseReader(request.getReader()).getAsJsonObject();
               String accion = datosJsonRecuperados.get("accion").getAsString();
-        	switch(accion) {
-=======
+        	
+
         	
         	
         	
-        	  jsonObject = JsonParser.parseReader(request.getReader()).getAsJsonObject();
-              String accion = jsonObject.get("accion").getAsString();
-              System.out.println(" JSON recibido: " + jsonObject);
+              System.out.println(" JSON recibido: " + datosJsonRecuperados);
 
               
               switch(accion) {
->>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
         	case "login":
                 autentificacionLog(datosJsonRecuperados,request, response);
                 	break ;
@@ -109,9 +105,7 @@ public class Autentificacion extends HttpServlet {
         String  nombres= null;
         String apellidos = null;
         String contrasena= null;
-        try {
-
-<<<<<<< HEAD
+     
 		    try {
 
 				// recuperamos  los datos de  del objeto de tipo  jsonObject(datosjson)
@@ -140,8 +134,7 @@ si la validacion es "ok "
 instanciamos un objeto de tipo Usuairo  con los datos obtenidos del 
 request JsonObject
 */
-		    Usuario usuarioReg = new Usuario(nombres, apellidos, correo, contrasena);  
-
+		    Usuario usuarioReg = new Usuario(dni, nombres, apellidos, correo, nombres, apellidos, contrasena);
 		    try {
 		        usersDao.registrarUsuario(usuarioReg);   // hacemos un try al registro 
 
@@ -167,102 +160,7 @@ request JsonObject
 	}
 
 	private void autentificacionLog(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
-	    Gson gson = new Gson();//VARIABLE PARA MANEJO DE METODOS DE LA LIBRERIA 
-	    JsonObject datos = new JsonObject();//VARIABLE PARA MANEJO DE METODOS DE LA 
-		try{
-			String correo = jsonObject.get("correo").getAsString();
-	        String contrasena = jsonObject.get("contrasena").getAsString();
-
-
-			
-		}catch(Exception){
-		        System.out.println("Error al leer el JSON: " + e.getMessage());
-
-			
-		}
-
-
-	        Usuario usuario = new UsuariosDao().autenticar(correo, contrasena);
-
-		
-		
-	    try {
-	        
-
-	        
-	        
-
-	        if (usuario != null) {
-	        	 HttpSession session = request.getSession();// obtienes la sesion 
-	        	    session.setAttribute("usuarioLogeado", usuario);  // objeto de tipo http se asigna al usuario autentificado 
-	        	    System.out.println("Usuario guardado en sesión: " + usuario.getCorreo());   
-
-	        	
-	        	datos.addProperty("status", "success"); // estado exitoso  al estado de validacion 
-	           datos.addProperty("mensaje", "validacion Correcta");
-	        } else {
-	            datos.addProperty("status", "errorVALIDACION");
-	            datos.addProperty("mensaje", "CREDENCIALES INCORRECTAS INCORRECTA");
-	        }
-
-	    } catch (Exception e) {
-	        datos.addProperty("status", "error");
-	        datos.addProperty("mensaje", "Error procesando la solicitud: " + e.getMessage());
-	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	    }
-
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(gson.toJson(datos));
-	}
-=======
-
-            dni= datosJson.get("dni").getAsString();
-            genero=datosJson.get("genero").getAsString();
-            fechaNac=datosJson.get("fechaNac").getAsString();
-        	correo = datosJson.get("correo").getAsString();
-	        nombres = datosJson.get("nombre").getAsString();
-	        apellidos = datosJson.get("apellido").getAsString(); 
-	        contrasena = datosJson.get("contrasena").getAsString();
-	        
-        	
-        	
-        	
-
-            if (usersDao.existeUsuario(dni, correo)) {
-                jsonResponse.addProperty("estado", false);
-                jsonResponse.addProperty("mensaje", "Ya existe un usuario con ese DNI o correo.");
-            } else {
-            	Usuario usuarioReg = new Usuario(dni, nombres, apellidos, correo, fechaNac, genero, contrasena);
-
-                Usuario usuarioCreado = usersDao.registrarUsuario(usuarioReg); // debe devolver el usuario o null
-                	 
-            	  if (usuarioCreado != null) {
-                      jsonResponse.addProperty("estado", true);
-                      jsonResponse.addProperty("mensaje", "Usuario registrado correctamente.");
-                  } else {
-                      jsonResponse.addProperty("estado", false);
-                      jsonResponse.addProperty("mensaje", "No se pudo registrar el usuario (error en la base de datos).");
-                  }
-            
-            
-            
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            jsonResponse.addProperty("estado", false);
-            jsonResponse.addProperty("mensaje", "Error al procesar el registro: " + e.getMessage());
-        }
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(gson.toJson(jsonResponse));
-    }
-
-	private void autentificacionLog(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
 	   
-	/*	HttpSession  misesionactiva=  request.getSession();*/	
 		Gson gson = new Gson();
 	    JsonObject datos = new JsonObject();
 //		if(misesionactiva == null) {   		
@@ -302,6 +200,6 @@ request JsonObject
 				    response.getWriter().write(gson.toJson(datos));
 				}
 
->>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
+//>>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
 
 }

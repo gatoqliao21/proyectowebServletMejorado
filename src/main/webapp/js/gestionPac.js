@@ -3,32 +3,32 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	
 	const contenedorActualizarData = document.getElementById('contenedorActualizarData');
-	const btnEditarPerfil = document.getElementById('btn-editar-perfil');
+	const btnEditarPerfil = document.getElementById('btn_editar_usuario');
 
 	const formActualizarDataUsuario = document.getElementById("formActualizarPerfil");
   const btnFormRegistrar = document.getElementById('miBoton');
-  const ContenedorformularioReg = document.getElementById('contenedorGeneral');
+ 
+  // VARIABLES FORMULARIO DE REGISTRO  DE PACIENTES 
+   const ContenedorformularioReg = document.getElementById('contenedorGeneral');
   const btnProcesarRegistro=  document.getElementById('btnProcesarGestion');
-
   const btnCerrarFormReg = document.getElementById('cerrar-formulario');
-<<<<<<< HEAD
   const tbodyPacientes = document.querySelector('#mi_tabla_citas tbody'); 
-=======
-  const tbodyPacientes = document.querySelector('#mi_tabla_citas tbody');
-  const formularioReg = document.getElementById('formulario');
->>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
-  const accion = 'obtenerDatos';
+//  const tbodyPacientes = document.querySelector('#mi_tabla_citas tbody');
+  const formularioReg = document.getElementById('contenedorGeneral');
   
   const mensajeExito =  document.getElementById('mensajeExito');
 
   
 
    // se decklara un arreglo de ambito superior para modificar los pacientes
+   //const accion = 'obtenerDatos';
   
   	let listaPacientesData= []
+	
+	const accion='obtenerDatos'
   
   function cargarPacientes() {
-<<<<<<< HEAD
+
      fetch(`./GestionPacientesServlet?accion=${accion}`)
        .then(response => {
          if (!response.ok) throw new Error('Error al obtener pacientes');// excepcion obtenida ante la respuesta null 
@@ -36,112 +36,91 @@ document.addEventListener('DOMContentLoaded', function () {
        })
        .then(listaPacientes => {   //manejo de lista devuelta por el servlet 
          tbodyPacientes.innerHTML = ''; 
+		 console.log(listaPacientes)
 
          if (Array.isArray(listaPacientes) && listaPacientes.length > 0) {
            listaPacientes.forEach(paciente => {
              const fila = document.createElement('tr');
              fila.innerHTML = `
                <td>${paciente.nombre}</td>
-               <td>${paciente.Fecha}</td>
                <td>${paciente.Sexo}</td>
                <td>${paciente.Telefono}</td>
-               <td>${paciente.Direccion}</td>
-               <td>${paciente.Consulta}</td>
-             `;
-             tbodyPacientes.appendChild(fila);
-           });
-         } else {  //se llama al else siempre y cuando no tengamos una lista pacinetes ni  una cantidad mayor a 0 
-           tbodyPacientes.innerHTML = '<tr><td colspan="6">No hay pacientes registrados.</td></tr>';
-         }
-       })
-       .catch(error => {
-         
-		   console.error("Error al cargar pacientes:", error);
-         tbodyPacientes.innerHTML = '<tr><td colspan="6">Error al cargar los pacientes.</td></tr>';
-       });
-   }
-   cargarPacientes();
-=======
-    fetch(`./GestionPacientesServlet?accion=${accion}`)
-      .then(response => response.json())
-      .then(listaPacientes => {
-		listaPacientesData = listaPacientes;
-		
-        tbodyPacientes.innerHTML = '';
-        if (Array.isArray(listaPacientesData) && listaPacientesData.length > 0) {
-      
-			
-		 listaPacientesData.forEach(paciente => {
-            const fila = document.createElement('tr');
-			const pacienteID= paciente.id;	
-			console.log(pacienteID)
-			
-            fila.innerHTML = `
-              <td>${paciente.nombre}</td>
-              <td>${paciente.Sexo}</td>
-              <td>${paciente.Telefono}</td>
-              <td>${paciente.Consulta}</td>
-			  <td>
-			    <button id="btn_editar_${pacienteID}" type="button">Editar</button>
-				<button id="btn_eliminar_${pacienteID}" type="button">Eliminar</button>
-			</td>
-			  
+             <td>${paciente.Consulta}</td>
+			 <td>${
+				`
+				<button class="btn-accion-pacienes btn-editar" data-dni="${paciente.DNI}" >editar</button>
+				<button class="btn-accion-pacienes btn-eliminar" data-dni="${paciente.DNI}">eliminar</button>
+				`			 }</td>
+
+			 
 			              `;
-            tbodyPacientes.appendChild(fila);
-// se  crea boton seleccionable despues de crear la fila 
-			const btn_eliminar = document.getElementById(`btn_eliminar_${pacienteID}`); 
-
-			
-				// ya existe en el dom por ello es  accesible 
-			btn_eliminar.addEventListener('click', () => {
-					 		console.log(`eliminado paciente con ID:${pacienteID}`);
-				parametros={
-					accion:"eliminar",
-					id: paciente.DNI
+             
+			 tbodyPacientes.appendChild(fila);
+			 
+			 })
+		 }
+		 
+		 
+		 document.addEventListener("click", function(event) {
+  			const btn= event.target;
+				
+				let parametros = {};
+					if(   btn.classList.contains("btn-accion-pacienes")			){
 					
-					
-				};
-				
-				fetch('./GestionPacientesServlet', {
-				    method: 'POST',
-				    headers: { 'Content-Type': 'application/json' },
-				    body: JSON.stringify(parametros)
-				  })
-				    .then(response => response.json())
-				    .then(data => {
-				      if (data.estado) {
-				        alert(data.mensaje);
-				        cargarPacientes();
-				      } else {
-				        alert("Error: " + data.mensaje);
-				      }
-				    })
-				    .catch(error => {
-				      console.error("Error en fetch:", error);
-				      alert("Ocurrió un error al registrar el paciente.");
-				    });
-				
-				
-
+						const  DNIPaciente = btn.dataset.dni;
+							parametros={
+								DNI: DNIPaciente,
+								accion: btn.classList.contains("btn-eliminar") ? "eliminar" : "editar"						
+																	
 							
-												})
+								};
+
+								fetch('./GestionPacientesServlet',{
+									method:'POST',
+									headers:
+										{'Content-Type':'application/json'},
+										body:JSON.stringify(parametros)
+									
+									
+								})
+								.then(response=> response.json())
+								.then(data=>{
+									if(data.estado){
+										alert(data.mensaje);
+										cargarPacientes();
+									}else{
+										alert("Error : " + data.mensaje)
+									}
+
+								})
+								.catch(error => {
+									console.error("Error en fetch:", error);
+									alert("Ocurrió un error AL REALIZAR OPERACION.");
+
+									})
+						
+					
 				
+				
+								
+			}
+
 			
 			
 			
 			
-			
-          });
-        } else {
-			tbodyPacientes.innerHTML = '<tr><td colspan="5">No hay pacientes registrados.</td></tr>';        }
-      })
-      .catch(error => {
-		console.error("Error al cargar pacientes:", error);
-		        tbodyPacientes.innerHTML = '<tr><td colspan="5">Error al cargar los pacientes.</td></tr>';
-		      });
-  }
-  cargarPacientes();
->>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
+		 });
+
+		 		 				 		//console.log(`eliminado paciente con ID:${pacienteID}`);
+		 		 	
+	 })
+ }
+			 ;
+			 		
+						
+			 cargarPacientes();
+
+// se  crea boton seleccionable despues de crear la fila 
 
   
   // SE CREA VALRIABLE PARA SELECCIONAR 
@@ -268,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
       .then(response => response.json())  // procesa respuesta del servidor convirtiendolo a  json 
       .then(data => {
-<<<<<<< HEAD
+
         console.log("Respuesta del servidor:", data);
 		//manejando el cuerpo de la respuesta http 
 
@@ -283,23 +262,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		        console.error("Error en fetch:", error);
 		        alert("Ocurrió un error al registrar el paciente: " + error.message);
 		      });
-		  });
+		  
 		});
-=======
-        if (data.estado) {
-          alert(data.mensaje);
-          ContenedorformularioReg.style.display = 'none';
-          cargarPacientes();
-        } else {
-          alert("Error: " + data.mensaje);
-        }
-      })
-      .catch(error => {
-        console.error("Error en fetch:", error);
-        alert("Ocurrió un error al registrar el paciente.");
-      });
-  });
-
+        
   
   formActualizarDataUsuario.addEventListener("submit", function (event) {
       event.preventDefault();
@@ -382,31 +347,4 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
   
-  
-/**
- *  btn_eliminar.addEventListener("DOMContentLoaded", function (event) {
- 	event.preventDefault();
- 	
- 	lista
- 	
- 	fetch("./GestionPacientesServlet", {
- 		method: 'POST',
- 		headers: { 'Content-Type': 'application/json' },
- 	      
- 		
- 		  body: JSON.stringify(params)
- 	    })
- 	    .then(response => response.json()
- 		
- 		
- 	  )
- 	
- 	
- 	
-   })
- * 
- *  */  
-  
-  
-});
->>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
+  });

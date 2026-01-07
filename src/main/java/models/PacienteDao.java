@@ -15,12 +15,38 @@ import configuraciones.SqlServerConexion;
 public class PacienteDao {
 
 // PENDIENTE IMPLEMENTAR
-	public void eliminarPaciente(String dni)
-	{
+	public boolean  eliminarPaciente(String dni)
+	{		
 		
+		boolean respuesta ;			
+		PreparedStatement ps;
 		
+		try(Connection con = SqlServerConexion.conectar()
+				
+				) {
+			
 		
-	}	
+
+		    String sql = "DELETE FROM Pacientes WHERE dni = ?";
+
+			
+			ps = con.prepareStatement(sql);
+				ps.setString(1, dni);    
+
+		int filasAfectadas=	ps.executeUpdate();
+			
+			
+		//retorna true 
+			return  filasAfectadas>0;
+
+			
+		}
+		catch(Exception e)
+		{
+			
+			e.printStackTrace();
+			return false ;
+		}}	
 public void agregarPaciente(Paciente paciente) {
 		
 

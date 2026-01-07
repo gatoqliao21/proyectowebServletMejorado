@@ -83,8 +83,7 @@ body {
 }
 
 /* Agrupación de estilos base */
-#btn-editar-perfil,
-#btn-cerrar-sesion {
+.btn-accion{
     background-color: #007bff; /* Azul primario */
     color: #fff;
     border: none;

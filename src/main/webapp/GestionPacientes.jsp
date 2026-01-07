@@ -54,7 +54,7 @@
                     <span id="sp_perfil">Mi Perfil Clínico</span><br>
 
 				<div id="botones-edicionperfil">
-				    <button type="button" id="btn-editar-perfil" class="btn-accion" style="width: 100%;">Editar mi perfil</button>
+				    <button type="button" id="btn_editar_usuario" class="btn-accion" style="width: 100%;">Editar mi perfil</button>
 				
 				    <button type="button" id="btn-cerrar-sesion" class="btn-accion" style="width: 100%;">Cerrar sesion</button>
 				</div>
@@ -217,5 +217,7 @@
     </div>
 
 
+
+<button id="btn_eliminar">kfnsafkas</button>
 </body>
 </html>

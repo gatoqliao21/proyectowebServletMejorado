@@ -9,6 +9,9 @@ import java.sql.Statement;
 import configuraciones.SqlServerConexion;
 
 public class UsuariosDao {
+	
+	
+	
 
 	public Usuario registrarUsuario(Usuario usuario) {
 	    String sql = "INSERT INTO Usuarios(nombre, apellido, correo, contrasena, DNI, FechaNacimiento, genero) VALUES (?, ?, ?, ?, ?, ?, ?)";
