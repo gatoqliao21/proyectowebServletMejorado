@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	const contenedorActualizarData = document.getElementById('contenedorActualizarData');
 	const btnEditarPerfil = document.getElementById('btn_editar_usuario');
-
+//variables para el usuario 
+const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario");
 	const formActualizarDataUsuario = document.getElementById("formActualizarPerfil");
   const btnFormRegistrar = document.getElementById('miBoton');
  
@@ -19,6 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const mensajeExito =  document.getElementById('mensajeExito');
 
   
+  
+  
+  
+
 
    // se decklara un arreglo de ambito superior para modificar los pacientes
    //const accion = 'obtenerDatos';
@@ -264,87 +269,66 @@ document.addEventListener('DOMContentLoaded', function () {
 		      });
 		  
 		});
-        
-  
-  formActualizarDataUsuario.addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const peso = document.getElementById('peso').value;
-      const altura = document.getElementById('altura').value;
-      const tipoSangre = document.getElementById('sangre-txt').value;
-      
-      if (!peso || !altura) {
-          alert("Por favor complete peso y altura");
-          return;
-      }
-
-   
-	  
-	  
-	  
-
-	  const params ={
-	  accion:"actualizarPerfil",
-	  peso,
-	  altura,
-	  tipoSangre
-
-	  }
-	  
-	  
-	  
-    
-      const submitBtn = formActualizarDataUsuario.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-	  
-	  submitBtn.textContent = "Guardando...";
-	  	
-	  			submitBtn.disabled = true;  
-
-		
-
-      
-	  
-      fetch("./GestionUsuarioServlet", {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(params)
-      })
-      .then(response => response.json()
+     
 		
 		
-	  )
-      .then(data => {
-          console.log("Datos de respuesta:", data);
-          
-          if (data.status) {
-              console.log("Perfil actualizado exitosamente");
-             
-			  
-			          setTimeout(() => {
-			              mensajeExito.style.display = 'block'; 
-			              
-			              setTimeout(() => {
-			                   mensajeExito.style.display = 'none';
-			              }, 3000); 
-			              
-			          }, 1000);
-			  
-			  
-			  
-          } else {
-              throw new Error("Respuesta inesperada: " + data);
-          }
-      })
-      .catch(error => {
-          console.error("Error completo:", error);
-          alert("Error al actualizar perfil: " + error.message);
-      })
-      .finally(() => {
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-      });
-  });
-  
+		formActualizarDataUsuario.addEventListener("submit", function (event) {
+		    event.preventDefault();
+
+		    // CORRECCIÓN: Añadido .value.trim() a peso
+		    const peso = document.getElementById('peso-txt').value.trim(); 
+		    const altura = document.getElementById('altura-txt').value.trim(); 
+			const tipoSangre = document.getElementById('sangre-txt').value.trim();
+		    if (!peso || !altura || !tipoSangre) {
+		        alert("Completa todos los campos antes de continuar.");
+		        return;
+		    }
+
+		    const parametros = {
+		        accion: "actualizarDatos", // Asegúrate que coincida con el switch de Java
+		        peso: peso,
+		        altura: altura,
+		        tipoSangre: tipoSangre
+		    };
+
+		    const submitBtn = formActualizarDataUsuario.querySelector('button[type="submit"]');
+		    const originalText = submitBtn.textContent;
+		    submitBtn.textContent = "Guardando...";
+		    submitBtn.disabled = true;  
+
+		    fetch("./GestionUsuarioServlet", {
+		        method: 'POST',
+		        headers: { 'Content-Type': 'application/json' },
+		        body: JSON.stringify(parametros)
+		    })
+		    .then(response => {
+		        if (!response.ok) throw new Error("Error en el servidor");
+		        return response.json();
+		    })
+		    .then(data => {
+		        if (data.status) {
+		            // Mostrar mensaje de éxito (tu lógica de setTimeout)
+		            mensajeExito.style.display = 'block';
+		            setTimeout(() => { mensajeExito.style.display = 'none'; }, 3000);
+		        } else {
+		            alert("Error: " + data.mensaje);
+		        }
+		    })
+		    .catch(error => {
+		        console.error("Error:", error);
+		        alert("Error al actualizar: " + error.message);
+		    })
+		    .finally(() => {
+		        submitBtn.textContent = originalText;
+		        submitBtn.disabled = false;
+		    });
+		});
+		   
+
+		 
+		 
+		 
+		 
+		    
   
   });

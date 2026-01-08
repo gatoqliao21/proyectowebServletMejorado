@@ -53,7 +53,7 @@ public class GestionUsuarioServlet extends HttpServlet {
 			
 			switch(accion) {
 			
-			case "actualizarPerfil":
+			case "actualizarDatos":
         		actualizarDatos(JsonObject,request, response);
         		break;	
 				
@@ -79,11 +79,10 @@ public class GestionUsuarioServlet extends HttpServlet {
 		JsonObject jsonResponse= new JsonObject();
 
 		Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
-
+		
 		String altura= null;
 		String peso= null;
 		String tipoSangre= null;
-		
 		if(usuario == null) {
 			System.out.println("usuario deslogeado, vuelve a iniciar sesion ");
 			
@@ -94,10 +93,10 @@ public class GestionUsuarioServlet extends HttpServlet {
 		}
 		
 		try {
-			
 			altura =   jsonObject.get("altura").getAsString();
 			peso=   jsonObject.get("peso").getAsString();
 			tipoSangre=   jsonObject.get("tipoSangre").getAsString();
+			
 			boolean datosActualizados = UsuariosDao.actualizarPerfil(usuario.getId(), altura, peso, tipoSangre);
 			
 			if(datosActualizados) {

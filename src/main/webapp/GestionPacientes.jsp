@@ -180,33 +180,31 @@
 	<form id="formActualizarPerfil" method="post">
     <input type="hidden" name="accion" value="actualizarPerfil">
 
+   
     <div class="labelcontainer">
         <label>Genero</label>
         <input type="text" id="txtSexoActualizar" value="<%= usuario.getSexo() %>" disabled>
     </div>
-    <div class="labelcontainer">
-        <label>Edad</label>
-       <input type="text" id="edad" value=" <%= edad != 0 ? edad : "" %>" disabled>
-    </div>
+  
     <div class="labelcontainer">
         <label>Peso</label>
-        <input type="text" name="peso" id="peso" value="<%= usuario.getPeso() != null ? usuario.getPeso() : ""  %>">
+        <input type="text" name="peso" id="peso-txt">
     </div>
     <div class="labelcontainer">
         <label>Altura</label>
-        <input type="text" name="altura" id="altura" value="<%= usuario.getAltura() != null ? usuario.getAltura() : ""   %>">
+        <input type="text" name="altura" id="altura-txt" >
     </div>
     <div class="labelcontainer">
         <label>Tipo de Sangre</label>
         <select name="tipoSangre" id="sangre-txt">
-            <option value="">Seleccione</option>
+            <option  id="cbotipodeSangre">Seleccione</option>
             <% for (String tipo : tiposSangre) { %>
                 <option value="<%= tipo %>" <%= tipo.equals(tipoUsuario) ? "selected" : "" %>><%= tipo %></option>
             <% } %>
         </select>
     </div>
 
-    <button type="submit" class="miBoton">Guardar</button>
+    <button type="submit" id="actualizarDatosUsuario" class="miBoton">Guardar</button>
 </form>
 
 <div id="mensajeExito" style="display:none; color:green; margin-top:10px;">
