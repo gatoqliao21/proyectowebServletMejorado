@@ -149,13 +149,9 @@ JsonObject jsonObject = null;
 
 	private void EliminarPac(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
 				
-	    PrintWriter out = response.getWriter();// objeto de tipo printwriter  que permite enviar respuesta al cliente 
-	    Gson gson = new Gson();
-	    PrintWriter outE  = response.getWriter();
-		PacienteDao PacienteDao = new PacienteDao();
-		 
-	    Gson gson1 = new Gson();
-        JsonObject json = new JsonObject();
+	    PrintWriter out = response.getWriter();
+	    PacienteDao PacienteDao = new PacienteDao();
+	    JsonObject json = new JsonObject();
 
 		String DNIPaciente= null;
 		

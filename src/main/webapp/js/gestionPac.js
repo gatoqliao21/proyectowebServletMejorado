@@ -18,10 +18,10 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
   const formularioReg = document.getElementById('contenedorGeneral');
   
   const mensajeExito =  document.getElementById('mensajeExito');
+//variable para cerrar sesion 
 
   
-  
-  
+  const btnCerrarSession = document.getElementById('btn-cerrar-sesion');  
   
 
 
@@ -41,7 +41,6 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
        })
        .then(listaPacientes => {   //manejo de lista devuelta por el servlet 
          tbodyPacientes.innerHTML = ''; 
-		 console.log(listaPacientes)
 
          if (Array.isArray(listaPacientes) && listaPacientes.length > 0) {
            listaPacientes.forEach(paciente => {
@@ -116,7 +115,6 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
 			
 		 });
 
-		 		 				 		//console.log(`eliminado paciente con ID:${pacienteID}`);
 		 		 	
 	 })
  }
@@ -125,10 +123,6 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
 						
 			 cargarPacientes();
 
-// se  crea boton seleccionable despues de crear la fila 
-
-  
-  // SE CREA VALRIABLE PARA SELECCIONAR 
 
   
   btnFormRegistrar.addEventListener('click', function () {
@@ -253,8 +247,7 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
       .then(response => response.json())  // procesa respuesta del servidor convirtiendolo a  json 
       .then(data => {
 
-        console.log("Respuesta del servidor:", data);
-		//manejando el cuerpo de la respuesta http 
+   
 
 		  if (data.estado) {
 		          alert(data.mensaje); 
@@ -275,7 +268,6 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
 		formActualizarDataUsuario.addEventListener("submit", function (event) {
 		    event.preventDefault();
 
-		    // CORRECCIÓN: Añadido .value.trim() a peso
 		    const peso = document.getElementById('peso-txt').value.trim(); 
 		    const altura = document.getElementById('altura-txt').value.trim(); 
 			const tipoSangre = document.getElementById('sangre-txt').value.trim();
@@ -285,7 +277,7 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
 		    }
 
 		    const parametros = {
-		        accion: "actualizarDatos", // Asegúrate que coincida con el switch de Java
+		        accion: "actualizarDatos", 
 		        peso: peso,
 		        altura: altura,
 		        tipoSangre: tipoSangre
@@ -329,6 +321,24 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
 		 
 		 
 		 
-		    
+		btnCerrarSession.addEventListener('click',function(){
+			if(confirm("¿estas seguro de cerrar sesion?")){
+				
+			const parametros= {accion : "cerrarSesion"};
+				
+				fetch("./GestionUsuarioServlet", {
+						        method: 'POST',
+						        headers: { 'Content-Type': 'application/json' },
+						        body: JSON.stringify(parametros )
+						    })
+				.then(() => {
+					window.location.href = 'Login.jsp';
+					});
+			}
+			
+		})
+	
+		
+		
   
   });

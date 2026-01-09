@@ -57,6 +57,10 @@ public class GestionUsuarioServlet extends HttpServlet {
         		actualizarDatos(JsonObject,request, response);
         		break;	
 				
+        		
+			case "cerrarSesion"	:
+				cerrarSesion(JsonObject, request, response);
+				
 			}
 			
 			
@@ -71,6 +75,20 @@ public class GestionUsuarioServlet extends HttpServlet {
 		
 	
 	
+	}
+
+	private void cerrarSesion(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		
+		
+		HttpSession session =request.getSession(false);
+		
+		if(session != null) {
+			
+			session.invalidate();
+		}
+		response.sendRedirect("Login.jsp");
+		
 	}
 
 	private void actualizarDatos(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
