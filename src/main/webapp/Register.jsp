@@ -50,6 +50,7 @@
 		<button type="submit" class="buttons" id="btn-submit" >Registrar		</button>
 
 </form>
+					<jsp:include page="items/mensaje_respuesta.jsp"></jsp:include>
 
 </body>
 </html>

@@ -98,22 +98,25 @@ public class Autentificacion extends HttpServlet {
         Gson gson = new Gson();
 
         String dni = null;
-        String genero = null;
+        String sexo = null;
         
-        String fechaNac= null;
+        String fechNac= null;
         String correo = null;
-        String  nombres= null;
-        String apellidos = null;
+        String  nombre= null;
+        String apellido = null;
         String contrasena= null;
      
 		    try {
 
 				// recuperamos  los datos de  del objeto de tipo  jsonObject(datosjson)
-		        correo = datosJson.get("correo").getAsString();
-		        nombres = datosJson.get("nombre").getAsString();
-		        apellidos = datosJson.get("apellido").getAsString(); 
+		       dni = datosJson.get("dni").getAsString();
+		    	correo = datosJson.get("correo").getAsString();
+		    	sexo= datosJson.get("genero").getAsString();
+
+		        nombre = datosJson.get("nombre").getAsString();
+		        apellido = datosJson.get("apellido").getAsString(); 
 		        contrasena = datosJson.get("contrasena").getAsString();
-		      
+		        fechNac= datosJson.get("fechaNac").getAsString();
 
 		    } catch (Exception e) {
 				// si no recupera datos  lanzamos una exepcion  e imprimimos en consola
@@ -134,8 +137,8 @@ si la validacion es "ok "
 instanciamos un objeto de tipo Usuairo  con los datos obtenidos del 
 request JsonObject
 */
-		    Usuario usuarioReg = new Usuario(dni, nombres, apellidos, correo, nombres, apellidos, contrasena);
-		    try {
+		    Usuario usuarioReg = new Usuario(dni,nombre, apellido, correo,  fechNac, sexo, contrasena);
+		    	try {
 		        usersDao.registrarUsuario(usuarioReg);   // hacemos un try al registro 
 
 		        jsonResponse.addProperty("estado", true); // agregamos propuedades is es true 

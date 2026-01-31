@@ -7,7 +7,8 @@ formularioRegister.addEventListener('submit', function (e) {
   
   const registrar = "registrar";
 
-  
+  const respuesta_registro= document.getElementById('etiqueta-respuesta');
+
 
   const datos = {
 	dni: document.getElementById('dni-txt').value,
@@ -39,13 +40,69 @@ formularioRegister.addEventListener('submit', function (e) {
   .then(response => response.json())
   .then(resultado => {
     if (resultado.estado) {
-      alert(resultado.mensaje);
-	  window.location.href = 'Login.jsp'; 
+	  
+		
+		console.log(respuesta_registro);
+	  if(respuesta_registro){
+
+		respuesta_registro.style.opacity="1";
+			  respuesta_registro.style.fontWeight="bold";
+			  respuesta_registro.style.background="#269726";
+			  respuesta_registro.innerHTML='<p>Bienvenido</p>'
+		  
+		  
+			  }
+			  setTimeout(function() {
+			  			respuesta_registro.style.opacity = '0';
+			  			
+			  			setTimeout(function() {
+			  				 if (respuesta_registro) {
+			  				respuesta_registro.innerHTML = '';
+			  				respuesta_registro.style.background = '';}
+			  						}, 300);
+			  					}, 1200);     
+			  						   	
+			  					   	
+			  						   			
+			  			  
+			  			setTimeout(function() {
+			  	//	  window.location.href = 'Login.jsp';
+			  			}, 1500);
+			  	       
+			  
+			  
+	  
+
+	  
+	 // window.location.href = 'Login.jsp'; 
 
 	  
 	     } else {
-      alert("Error: " + resultado.mensaje);
-    }
+      console.log("Error: " + resultado.mensaje);
+    if(respuesta_registro){
+		respuesta_registro.style.background='red';
+		respuesta_registro.style.innerHTML=`<p>${resultado.mensaje}</p>`;
+		respuesta_registro.style.fonweight='bold';
+		respuesta_registro.style.opacity = '1';
+
+		
+	}
+	setTimeout(function() {
+			            if (respuesta_registro) {
+
+			                respuesta_registro.style.opacity = '0';
+							setTimeout(function() {
+							        if (respuesta_registro) {
+							            respuesta_registro.innerHTML = '';
+							            respuesta_registro.style.background = '';
+							        }
+							    }, 300); 
+						
+						        }
+			        }, 2000);	
+	
+	
+	  }
   })
   .catch(error => {
     console.error('Error en el registro:', error);
