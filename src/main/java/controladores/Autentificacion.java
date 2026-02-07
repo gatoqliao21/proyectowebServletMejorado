@@ -64,7 +64,7 @@ public class Autentificacion extends HttpServlet {
         	
         	
         	
-              System.out.println(" JSON recibido: " + datosJsonRecuperados);
+              System.out.println(" JSON recibido  del js : " + datosJsonRecuperados);
 
               
               switch(accion) {
@@ -91,7 +91,6 @@ public class Autentificacion extends HttpServlet {
 	}
     private void registrarCliente(JsonObject datosJson, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-    	System.out.println("Datos recibidos en registrarCliente: " + datosJson);
 
         UsuariosDao usersDao = new UsuariosDao();
         JsonObject jsonResponse = new JsonObject();
@@ -139,11 +138,22 @@ request JsonObject
 */
 		    Usuario usuarioReg = new Usuario(dni,nombre, apellido, correo,  fechNac, sexo, contrasena);
 		    	try {
-		        usersDao.registrarUsuario(usuarioReg);   // hacemos un try al registro 
+		    		// hacemos un try al registro 
+		    	 if(usersDao.registrarUsuario(usuarioReg)!= null)  {
+		    		 jsonResponse.addProperty("estado", true); // agregamos propuedades is es true 
+				        jsonResponse.addProperty("mensaje", "Usuario registrado correctamente.");
 
-		        jsonResponse.addProperty("estado", true); // agregamos propuedades is es true 
-		        jsonResponse.addProperty("mensaje", "Usuario registrado correctamente.");
-
+		    		 
+		    	 }   else {
+		    		 
+		    		 jsonResponse.addProperty("estado", false);
+				        jsonResponse.addProperty("mensaje", "el usuario ya existe  " );
+		    		 
+		    	 }
+		    		
+		    	
+		    			
+		        
 		    } catch (Exception e) {
 
 				// la excepcion se lanza si el registro te lanza un false 

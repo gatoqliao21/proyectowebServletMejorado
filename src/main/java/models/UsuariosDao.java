@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.*;
 
 import configuraciones.SqlServerConexion;
 
@@ -15,11 +16,33 @@ public class UsuariosDao {
 
 	public Usuario registrarUsuario(Usuario usuario) {
 	    String sql = "INSERT INTO Usuarios(nombre, apellido, correo, contrasena, DNI, FechaNacimiento, genero) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+	    List<Usuario> usuarios= tablaCompleta();
+	    //validacion de usuario 
+	    for(Usuario u:usuarios ) {
+	    	/*
+	    	 * 	Object valor= (usuario.getCorreo().equals(u.getCorreo())) ? null
+	    			:  (usuario.getDni().equals(u.getDni())) ? null
+	    					: "algun dato es incorrecto ";
+	    
+	    	 * 
+	    	 * */
+	 	if(usuario.getDni().equals(u.getDni())) {
+	    		System.out.println("usuario ya registrado ");
+	    		return null;
+	    		
+        }else if (usuario.getCorreo().equals(u.getCorreo()) ) {
+        	System.out.println("correo ya registrado ");
+    		return null;
+	   	}
+	    }
+	  
+	    
 	    try (Connection con = SqlServerConexion.conectar();
 	         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-	        ps.setString(1, usuario.getNombre());
+	       
+	    	
+	    	ps.setString(1, usuario.getNombre());
 	        ps.setString(2, usuario.getApellido());
 	        ps.setString(3, usuario.getCorreo());
 	        ps.setString(4, usuario.getContrasena());
@@ -27,28 +50,45 @@ public class UsuariosDao {
 	        ps.setString(6, usuario.getFechNac());
 	        ps.setString(7, usuario.getSexo());
 
+	        
+	        
+	        
 	        int filasAfectadas = ps.executeUpdate();
 	        System.out.println("Filas afectadas: " + filasAfectadas);
 
+	        
+	        
 	        if (filasAfectadas > 0) {
+	        	
 	            ResultSet rs = ps.getGeneratedKeys();
+	            
+	            
+	            
+
 	            if (rs.next()) {
-	                int idGenerado = rs.getInt(1);
+	            
+	            	
+	            	
+	                int idGenerado = rs.getInt(1);//recupera el valor de la columna designada
+	                
+	             
+	            	
+	                
 	                usuario.setId(idGenerado);
+	               
 	                System.out.println("Usuario registrado con ID: " + idGenerado);
 	            }
 	            return usuario; 
-	        } else {
-	            System.out.println(" No se insertó ningún registro en la base de datos.");
-	            return null;
-	        }
-
+	        } 
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return null; 
+	        
 	    }
+
+	    return null;
 	}
 
+	
 	
 	
 	public Usuario autenticar(String correo, String contrasena) {
@@ -63,7 +103,7 @@ public class UsuariosDao {
 
 	        if (rs.next()) {
 	            Usuario u = new Usuario();
-
+             
 
 	            u.setId(rs.getInt("ID"));
 	            u.setNombre(rs.getString("nombre"));
@@ -82,6 +122,42 @@ public class UsuariosDao {
 
 	    return null;
 	}
+	
+	public List<Usuario> tablaCompleta() {
+		String sql= "SELECT*FROM Usuarios";
+		List<Usuario> listaUsuarios = new ArrayList<>();
+
+	    try (Connection con = SqlServerConexion.conectar();
+	         PreparedStatement ps = con.prepareStatement(sql);
+	    		ResultSet rs = ps.executeQuery();){
+
+	    	while(rs.next()) {
+	    		
+	    		Usuario u= new Usuario();
+	    		u.setNombre(rs.getString("nombre"));
+	    		u.setApellido(rs.getString("apellido"));
+	    		u.setCorreo(rs.getString("correo"));
+	    		u.setContrasena(rs.getString("contrasena"));
+	    		u.setDni(rs.getString("DNI"));
+	    		u.setFechNac(rs.getString("FechaNacimiento"));
+	    		u.setSexo(rs.getString("genero"));
+	    		
+	    		listaUsuarios.add(u);
+	    	
+	    	}
+	    	
+	    	
+	    	
+	    	
+	    } catch (Exception e) {
+			// TODO: handle exception
+		}
+
+    	return listaUsuarios;
+
+		
+	}
+	
 	public boolean existeUsuario(String dni, String correo) {
 	    String sql = "SELECT COUNT(*) FROM Usuarios WHERE DNI = ? OR Correo = ?";
 	    try (Connection con = SqlServerConexion.conectar();

@@ -41,14 +41,13 @@ formularioRegister.addEventListener('submit', function (e) {
   .then(resultado => {
     if (resultado.estado) {
 	  
-		
-		console.log(respuesta_registro);
+		console.log(resultado.mensaje)
 	  if(respuesta_registro){
 
 		respuesta_registro.style.opacity="1";
 			  respuesta_registro.style.fontWeight="bold";
 			  respuesta_registro.style.background="#269726";
-			  respuesta_registro.innerHTML='<p>Bienvenido</p>'
+			  respuesta_registro.innerHTML=`<p>${resultado.mensaje}</p>`
 		  
 		  
 			  }
@@ -80,11 +79,15 @@ formularioRegister.addEventListener('submit', function (e) {
 	     } else {
       console.log("Error: " + resultado.mensaje);
     if(respuesta_registro){
+		respuesta_registro.style.opacity = '1';
+		respuesta_registro.style.fonweight='bold';
 		respuesta_registro.style.background='red';
 		respuesta_registro.style.innerHTML=`<p>${resultado.mensaje}</p>`;
-		respuesta_registro.style.fonweight='bold';
-		respuesta_registro.style.opacity = '1';
+		
+		
 
+		
+		
 		
 	}
 	setTimeout(function() {
