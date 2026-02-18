@@ -39,11 +39,11 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
          if (!response.ok) throw new Error('Error al obtener pacientes');// excepcion obtenida ante la respuesta null 
          return response.json();
        })
-       .then(listaPacientes => {   //manejo de lista devuelta por el servlet 
+       .then(listaPacientesData => {   //manejo de lista devuelta por el servlet 
          tbodyPacientes.innerHTML = ''; 
 
-         if (Array.isArray(listaPacientes) && listaPacientes.length > 0) {
-           listaPacientes.forEach(paciente => {
+         if (Array.isArray(listaPacientesData) && listaPacientesData.length > 0) {
+           listaPacientesData.forEach(paciente => {
              const fila = document.createElement('tr');
              fila.innerHTML = `
                <td>${paciente.nombre}</td>
@@ -268,16 +268,19 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
 		formActualizarDataUsuario.addEventListener("submit", function (event) {
 		    event.preventDefault();
 
+			const correo = document.getElementById('txtActualizarCorreo').value.trim(); 
+
 		    const peso = document.getElementById('peso-txt').value.trim(); 
 		    const altura = document.getElementById('altura-txt').value.trim(); 
 			const tipoSangre = document.getElementById('sangre-txt').value.trim();
-		    if (!peso || !altura || !tipoSangre) {
+		    if (!peso || !altura || !tipoSangre || !correo ) {
 		        alert("Completa todos los campos antes de continuar.");
 		        return;
 		    }
 
 		    const parametros = {
 		        accion: "actualizarDatos", 
+				correo: correo,
 		        peso: peso,
 		        altura: altura,
 		        tipoSangre: tipoSangre

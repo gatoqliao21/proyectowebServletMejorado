@@ -79,10 +79,11 @@ formularioRegister.addEventListener('submit', function (e) {
 	     } else {
       console.log("Error: " + resultado.mensaje);
     if(respuesta_registro){
+		respuesta_registro.style.background='red';
+				respuesta_registro.innerHTML=`<p>${resultado.mensaje}</p>`;
 		respuesta_registro.style.opacity = '1';
 		respuesta_registro.style.fonweight='bold';
-		respuesta_registro.style.background='red';
-		respuesta_registro.style.innerHTML=`<p>${resultado.mensaje}</p>`;
+		
 		
 		
 

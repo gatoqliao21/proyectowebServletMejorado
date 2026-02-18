@@ -19,13 +19,7 @@ public class UsuariosDao {
 	    List<Usuario> usuarios= tablaCompleta();
 	    //validacion de usuario 
 	    for(Usuario u:usuarios ) {
-	    	/*
-	    	 * 	Object valor= (usuario.getCorreo().equals(u.getCorreo())) ? null
-	    			:  (usuario.getDni().equals(u.getDni())) ? null
-	    					: "algun dato es incorrecto ";
-	    
-	    	 * 
-	    	 * */
+	    	
 	 	if(usuario.getDni().equals(u.getDni())) {
 	    		System.out.println("usuario ya registrado ");
 	    		return null;
@@ -176,8 +170,8 @@ public class UsuariosDao {
 
 	
 	
-	 public static boolean actualizarPerfil(int idUsuario, String altura, String peso, String tipoSangre) {
-	        String SQL_UPDATE = "UPDATE Usuarios SET Altura = ?, Peso = ?, TipoSangre = ? WHERE ID = ?";
+	 public static boolean actualizarPerfil(int idUsuario, String altura, String peso, String tipoSangre, String Correo) {
+	        String SQL_UPDATE = "UPDATE Usuarios SET Altura = ?, Peso = ?, TipoSangre = ?, correo=? WHERE ID = ?";
 
 	        try (Connection con = SqlServerConexion.conectar();
 	             PreparedStatement ps = con.prepareStatement(SQL_UPDATE)) {
@@ -185,7 +179,10 @@ public class UsuariosDao {
 	            ps.setString(1, altura);
 	            ps.setString(2, peso);
 	            ps.setString(3, tipoSangre);
-	            ps.setInt(4, idUsuario);
+	            ps.setString(4, Correo);
+	            ps.setInt(5, idUsuario);
+
+	            
 
 	            int filasAfectadas = ps.executeUpdate();
 

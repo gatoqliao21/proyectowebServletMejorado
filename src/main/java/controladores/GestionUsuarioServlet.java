@@ -57,7 +57,10 @@ public class GestionUsuarioServlet extends HttpServlet {
         		actualizarDatos(JsonObject,request, response);
         		break;	
 				
-        		
+        		/*
+        		 * pendiente colocar validacion para que el correo no se repita 
+        		 * 
+        		 * */
 			case "cerrarSesion"	:
 				cerrarSesion(JsonObject, request, response);
 				
@@ -101,6 +104,7 @@ public class GestionUsuarioServlet extends HttpServlet {
 		String altura= null;
 		String peso= null;
 		String tipoSangre= null;
+		String Correo = null;
 		if(usuario == null) {
 			System.out.println("usuario deslogeado, vuelve a iniciar sesion ");
 			
@@ -109,14 +113,23 @@ public class GestionUsuarioServlet extends HttpServlet {
 			jsonResponse.addProperty("mensaje", "usuario expiro vuelve a iniciar sesion");
 			
 		}
+		//pendinete error de actualizacion de correo validar error 
+		
 		
 		try {
+			Correo= jsonObject.get("correo").getAsString();
 			altura =   jsonObject.get("altura").getAsString();
 			peso=   jsonObject.get("peso").getAsString();
 			tipoSangre=   jsonObject.get("tipoSangre").getAsString();
+
 			
-			boolean datosActualizados = UsuariosDao.actualizarPerfil(usuario.getId(), altura, peso, tipoSangre);
 			
+			
+			
+			boolean datosActualizados = UsuariosDao.actualizarPerfil(usuario.getId(), altura, peso, tipoSangre,Correo);
+
+			
+
 			if(datosActualizados) {
 				jsonResponse.addProperty("status", true);
 				jsonResponse.addProperty("mensaje", "Datos actualizados");

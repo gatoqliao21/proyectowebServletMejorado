@@ -213,6 +213,5 @@ request JsonObject
 				    response.getWriter().write(gson.toJson(datos));
 				}
 
-//>>>>>>> 73e5594 (implementamos mejoras en tanto en la autentificacion , como en el manejo)
 
 }

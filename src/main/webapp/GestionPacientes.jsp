@@ -10,14 +10,7 @@
         return;
     }
 
-    String fechaNacStr = usuario.getFechNac(); 
-    int edad = 0;
-    if(fechaNacStr != null && !fechaNacStr.isEmpty()) {
-        java.time.LocalDate fechaNac = java.time.LocalDate.parse(fechaNacStr);
-        java.time.LocalDate hoy = java.time.LocalDate.now();
-        edad = java.time.Period.between(fechaNac, hoy).getYears();
-    }
-
+    //sTRING PARA PODER ESCOGER ENTRO LOS TIPOS DE SANGRE 
     String[] tiposSangre = {"A+", "A-", "O+", "O-", "B+", "B-", "AB+", "AB-"};
     String tipoUsuario = usuario.getTipoDeSangre() != null ? usuario.getTipoDeSangre() : "";
 %>
@@ -184,6 +177,12 @@
     <div class="labelcontainer">
         <label>Genero</label>
         <input type="text" id="txtSexoActualizar" value="<%= usuario.getSexo() %>" disabled>
+    </div>
+  
+     
+    <div class="labelcontainer">
+        <label>Correo</label>
+        <input type="text" id="txtActualizarCorreo" value="<%= usuario.getCorreo() %>" >
     </div>
   
     <div class="labelcontainer">
