@@ -142,8 +142,23 @@ JsonObject jsonObject = null;
 
 	
 
-	private void EditarPac(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void EditarPac(JsonObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+	    PrintWriter out = response.getWriter();
+	    JsonObject json = new JsonObject();
+
+		String DNIPaciente= null;
+		
+		try {
+			DNIPaciente = jsonObject.get("DNI").getAsString();
+			
+		
+		}catch(Exception e) {
+			
+			System.out.println(e);
+			
+		}
+	    
 		
 	}
 

@@ -65,55 +65,7 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
 		 }
 		 
 		 
-		 document.addEventListener("click", function(event) {
-  			const btn= event.target;
-				
-				let parametros = {};
-					if(   btn.classList.contains("btn-accion-pacienes")			){
-					
-						const  DNIPaciente = btn.dataset.dni;
-							parametros={
-								DNI: DNIPaciente,
-								accion: btn.classList.contains("btn-eliminar") ? "eliminar" : "editar"						
-																	
-							
-								};
 
-								fetch('./GestionPacientesServlet',{
-									method:'POST',
-									headers:
-										{'Content-Type':'application/json'},
-										body:JSON.stringify(parametros)
-									
-									
-								})
-								.then(response=> response.json())
-								.then(data=>{
-									if(data.estado){
-										alert(data.mensaje);
-										cargarPacientes();
-									}else{
-										alert("Error : " + data.mensaje)
-									}
-
-								})
-								.catch(error => {
-									console.error("Error en fetch:", error);
-									alert("Ocurrió un error AL REALIZAR OPERACION.");
-
-									})
-						
-					
-				
-				
-								
-			}
-
-			
-			
-			
-			
-		 });
 
 		 		 	
 	 })
@@ -123,7 +75,108 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
 						
 			 cargarPacientes();
 
+			  document.addEventListener("click", function(event) {
+			 	const btn= event.target;
+			 		
+			 		let parametros = {};
+			 			if(   btn.classList.contains("btn-accion-pacienes")			){
+			 			
+			 				const  DNIPaciente = btn.dataset.dni;
+			 					parametros={
+			 						DNI: DNIPaciente,
+			 						accion: btn.classList.contains("btn-eliminar") ? "eliminar" : "editar"						
+			 															
+			 					
+			 						};
+									if (parametros.accion === "editar") {
 
+									          const formularioEditarPac = document.createElement('div');
+									          formularioEditarPac.id = "editarPac";
+
+									          formularioEditarPac.innerHTML = `
+											  
+											  <form id="formActualizarPac" method="post">
+											  		 							    <input type="hidden" name="accion" value="actualizarPerfil">
+
+											  		 							   
+											  		 							    <div class="labelcontainer">
+
+											  		 								<label>Parentesco</label>
+											  		 								<select id="cboParentesco" name="parentesco">
+											  		 								                        <option>Padre</option>
+											  		 								                        <option>Madre</option>
+											  		 								                        <option>Conyugue</option>
+											  		 								                        <option>Hermano(a)</option>
+											  		 								                        <option>Hijo</option>  
+											  		 								                        <option>Otro</option>
+											  		 								                    </select>
+											  		 									</div>
+											  		 							   <div class="labelcontainer">
+											  		 								<label>Correo Electronico</label>
+											  		 								<input id="txtCorreo" type="text" name="correo">
+											  		 								</div>
+											  		 							   <div class="labelcontainer">
+											  		 								<label>Fecha de Nacimiento</label>
+											  		 								<input id="txtfecha" type="date" name="fecha_nacimiento">
+											  		 								</div>
+											  		 								
+											  		 								<div class="labelcontainer">
+											  		 								<label>Teléfono</label>
+											  		 								<input id="txtTelefono" type="text" name="telefono">
+											  		 								   </div>
+											  		 								   <div class="labelcontainer">
+											  		 								                       <label>Dirección</label>
+											  		 								                       <input id="txtDireccion" type="text" name="direccion">
+											  		 								                   </div>
+											  		 								   
+											  		 								   <button type="submit" id="actualizarDatosUsuario" class="miBoton">Guardar</button>
+											  		 								</form>
+											  		 								`	
+											  
+											  
+											  ;
+
+									          document.body.appendChild(formularioEditarPac);
+									      }
+
+			 						
+
+			 						fetch('./GestionPacientesServlet',{
+			 							method:'POST',
+			 							headers:
+			 								{'Content-Type':'application/json'},
+			 								body:JSON.stringify(parametros)
+			 							
+			 							
+			 						})
+			 						.then(response=> response.json())
+			 						.then(data=>{
+			 							if(data.estado){
+			 								alert(data.mensaje);
+			 								cargarPacientes();
+			 							}else{
+			 								alert("Error : " + data.mensaje)
+			 							}
+
+			 						})
+			 						.catch(error => {
+			 							console.error("Error en fetch:", error);
+			 							alert("Ocurrió un error AL REALIZAR OPERACION.");
+
+			 							})
+			 				
+			 			
+			 		
+			 		
+			 						
+			 	}
+
+
+			 	
+			 	
+			 	
+			 	
+			  });
   
   btnFormRegistrar.addEventListener('click', function () {
     if (window.getComputedStyle(ContenedorformularioReg).display === 'none') {
