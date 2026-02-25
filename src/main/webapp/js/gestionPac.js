@@ -72,111 +72,105 @@ const actualizarDatosUsuario =  document.getElementById("actualizarDatosUsuario"
  }
 			 ;
 			 		
-						
+			 // ===================================
+			 // REFERENCIA BOTÓN GUARDAR
+			 // ===================================
+			 const botonEditarPac = document.getElementById("actualizarDatosUsuario");
+
 			 cargarPacientes();
 
-			  document.addEventListener("click", function(event) {
-			 	const btn= event.target;
-			 		
-			 		let parametros = {};
-			 			if(   btn.classList.contains("btn-accion-pacienes")			){
-			 			
-			 				const  DNIPaciente = btn.dataset.dni;
-			 					parametros={
-			 						DNI: DNIPaciente,
-			 						accion: btn.classList.contains("btn-eliminar") ? "eliminar" : "editar"						
-			 															
-			 					
-			 						};
-									if (parametros.accion === "editar") {
+			 // ===================================
+			 // EVENTO GLOBAL (EDITAR / ELIMINAR)
+			 // ===================================
+			 document.addEventListener("click", function (event) {
 
-									          const formularioEditarPac = document.createElement('div');
-									          formularioEditarPac.id = "editarPac";
+			     const btn = event.target;
 
-									          formularioEditarPac.innerHTML = `
-											  
-											  <form id="formActualizarPac" method="post">
-											  		 							    <input type="hidden" name="accion" value="actualizarPerfil">
+			     if (!btn.classList.contains("btn-accion-pacienes")) return;
 
-											  		 							   
-											  		 							    <div class="labelcontainer">
+			     const DNIPaciente = btn.dataset.dni;
+			     const esEliminar = btn.classList.contains("btn-eliminar");
 
-											  		 								<label>Parentesco</label>
-											  		 								<select id="cboParentesco" name="parentesco">
-											  		 								                        <option>Padre</option>
-											  		 								                        <option>Madre</option>
-											  		 								                        <option>Conyugue</option>
-											  		 								                        <option>Hermano(a)</option>
-											  		 								                        <option>Hijo</option>  
-											  		 								                        <option>Otro</option>
-											  		 								                    </select>
-											  		 									</div>
-											  		 							   <div class="labelcontainer">
-											  		 								<label>Correo Electronico</label>
-											  		 								<input id="txtCorreo" type="text" name="correo">
-											  		 								</div>
-											  		 							   <div class="labelcontainer">
-											  		 								<label>Fecha de Nacimiento</label>
-											  		 								<input id="txtfecha" type="date" name="fecha_nacimiento">
-											  		 								</div>
-											  		 								
-											  		 								<div class="labelcontainer">
-											  		 								<label>Teléfono</label>
-											  		 								<input id="txtTelefono" type="text" name="telefono">
-											  		 								   </div>
-											  		 								   <div class="labelcontainer">
-											  		 								                       <label>Dirección</label>
-											  		 								                       <input id="txtDireccion" type="text" name="direccion">
-											  		 								                   </div>
-											  		 								   
-											  		 								   <button type="submit" id="actualizarDatosUsuario" class="miBoton">Guardar</button>
-											  		 								</form>
-											  		 								`	
-											  
-											  
-											  ;
+			     // ===============================
+			     // 🔴 ELIMINAR
+			     // ===============================
+			     if (esEliminar) {
 
-									          document.body.appendChild(formularioEditarPac);
-									      }
+			         const parametros = {
+			             DNI: DNIPaciente,
+			             accion: "eliminar"
+			         };
 
-			 						
+			         enviarAlServlet(parametros);
+			         return;
+			     }
 
-			 						fetch('./GestionPacientesServlet',{
-			 							method:'POST',
-			 							headers:
-			 								{'Content-Type':'application/json'},
-			 								body:JSON.stringify(parametros)
-			 							
-			 							
-			 						})
-			 						.then(response=> response.json())
-			 						.then(data=>{
-			 							if(data.estado){
-			 								alert(data.mensaje);
-			 								cargarPacientes();
-			 							}else{
-			 								alert("Error : " + data.mensaje)
-			 							}
+			     // ===============================
+			     // 🟢 EDITAR (abrir modal)
+			     // ===============================
+			     const formularioEditarPac = document.getElementById('contenedor-formulario-edit-Pac');
+			     formularioEditarPac.style.display = "block";
+			     formularioEditarPac.style.opacity = "1";
 
-			 						})
-			 						.catch(error => {
-			 							console.error("Error en fetch:", error);
-			 							alert("Ocurrió un error AL REALIZAR OPERACION.");
-
-			 							})
-			 				
-			 			
-			 		
-			 		
-			 						
-			 	}
+			     // Guardamos el DNI en el botón guardar
+			     botonEditarPac.dataset.dni = DNIPaciente;
+			 });
 
 
-			 	
-			 	
-			 	
-			 	
-			  });
+			 // ===================================
+			 // BOTÓN GUARDAR (EDITAR)
+			 // ===================================
+			 botonEditarPac.addEventListener('click', function () {
+
+			     const parametros = {
+			         DNI: botonEditarPac.dataset.dni,
+			         parentesco: document.getElementById('cboParentesco').value.trim(),
+			         correo: document.getElementById('txtCorreo').value.trim(),
+			         fechaNac: document.getElementById('txtfecha').value,
+			         telefono: document.getElementById('txtTelefono').value.trim(),
+			         direccion: document.getElementById('txtDireccion').value.trim(),
+			         accion: "editar"
+			     };
+
+			     console.log(parametros);
+
+			     enviarAlServlet(parametros);
+			 });
+			  
+		function enviarAlServlet(parametros){
+			
+			
+			
+
+					fetch('./GestionPacientesServlet',{
+						method:'POST',
+						headers:
+							{'Content-Type':'application/json'},
+							body:JSON.stringify(parametros)
+						
+						
+					})
+					.then(response=> response.json())
+					.then(data=>{
+						if(data.estado){
+							alert(data.mensaje);
+							cargarPacientes();
+						}else{
+							alert("Error : " + data.mensaje)
+						}
+
+					})
+					.catch(error => {
+						console.error("Error en fetch:", error);
+						alert("Ocurrió un error AL REALIZAR OPERACION.");
+
+						})
+
+			
+		}	  
+			  
+			  
+			  
   
   btnFormRegistrar.addEventListener('click', function () {
     if (window.getComputedStyle(ContenedorformularioReg).display === 'none') {

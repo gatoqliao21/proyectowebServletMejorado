@@ -22,9 +22,7 @@ body {
     gap: 25px;
 }
 
-/* ===========================
-   CABECERA PRINCIPAL
-=========================== */
+
 #contenedorDatos {
     background-color: #ffffff;
     border-radius: 12px;
@@ -41,9 +39,7 @@ body {
     margin: 0;
 }
 
-/* ===========================
-   DATOS DE USUARIO Y TABLA
-=========================== */
+
 #ContenedorDatosUsuario {
     display: flex;
     flex-wrap: nowrap;
@@ -195,7 +191,7 @@ body {
 
     display: none;
     position: fixed; /* ✅ lo fija en el centro de la pantalla */
-	top: 65%;
+	top: 30%;
     left: 50%;
     transform: translate(-50%, -50%); /* ✅ lo centra perfectamente */
     
@@ -207,18 +203,33 @@ body {
     width: 90%;
     opacity: 0;
     transition: opacity 0.4s ease, transform 0.4s ease;
-    z-index: 1000; /* ✅ asegura que esté por encima del resto */
+    z-index: 1000; /*  asegura que esté por encima del resto */
 
 
 }
+#contenedor-formulario-edit-Pac {
+    position: fixed; 
+	display:none;	
+    transform: translate(40%, 25%);
+	background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 90%;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 1000; 
+    pointer-events: none;
+}
+
 
 #contenedorActualizarData {
 
     display: none;
-    position: fixed; /* ✅ lo fija en el centro de la pantalla */
-	top: 65%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* ✅ lo centra perfectamente */
+    position: fixed; 
+	
+    transform: translate(40%, 25%);
     
     background-color: #ffffff;
     padding: 30px;
@@ -228,8 +239,7 @@ body {
     width: 90%;
     opacity: 0;
     transition: opacity 0.4s ease, transform 0.4s ease;
-    z-index: 1000; /* ✅ asegura que esté por encima del resto */
-
+    z-index: 1000; 
 
 }
 

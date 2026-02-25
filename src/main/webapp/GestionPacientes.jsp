@@ -206,14 +206,61 @@
     <button type="submit" id="actualizarDatosUsuario" class="miBoton">Guardar</button>
 </form>
 
+
+											  
+										
+											  
+
+
 <div id="mensajeExito" style="display:none; color:green; margin-top:10px;">
     Perfil actualizado correctamente.
 </div>
 
 
     </div>
+    
+    
+    <div  id="contenedor-formulario-edit-Pac"  style="display: none">
+    
 
+	  <form id="formActualizarPac" method="post">
+		    <input type="hidden" name="accion" value="actualizarPerfil">
 
+		   
+		    <div class="labelcontainer">
+
+			<label>Parentesco</label>
+			<select id="cboParentesco" name="parentesco">
+			                        <option>Padre</option>
+			                        <option>Madre</option>
+			                        <option>Conyugue</option>
+			                        <option>Hermano(a)</option>
+			                        <option>Hijo</option>  
+			                        <option>Otro</option>
+			                    </select>
+				</div>
+		   <div class="labelcontainer">
+			<label>Correo Electronico</label>
+			<input id="txtCorreo" type="text" name="correo">
+			</div>
+		   <div class="labelcontainer">
+			<label>Fecha de Nacimiento</label>
+			<input id="txtfecha" type="date" name="fecha_nacimiento">
+			</div>
+			
+			<div class="labelcontainer">
+			<label>Teléfono</label>
+			<input id="txtTelefono" type="text" name="telefono">
+			   </div>
+			   <div class="labelcontainer">
+			                       <label>Dirección</label>
+			                       <input id="txtDireccion" type="text" name="direccion">
+			                   </div>
+			   
+			   <button type="submit" id="actualizarDatosUsuario" class="miBoton">Guardar</button>
+			</form>
+		
+		</div>									  
 
 <button id="btn_eliminar">kfnsafkas</button>
 </body>
